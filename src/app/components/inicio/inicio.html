@@ -1,0 +1,40 @@
+<div class="registro-wrapper">
+
+  <div class="col-izquierda">
+    <div class="logo-area">
+      <span>LOGO</span>
+      <span>NOMBRE DE LA MARCA</span>
+    </div>
+    <div class="imagen-area">
+      <p>IMAGEN BONITA</p>
+    </div>
+    <button class="btn-volver" routerLink="/presentacion">↩</button>
+  </div>
+
+<div class="col-derecha">
+  <h1 class="titulo">¡Bienvenid@ de nuevo!</h1>
+  <div class="subtitulo">Qué bueno volverte a ver</div>
+
+  <div class="recuadro-formulario">
+    <div class="grupo-formulario">
+      <label>Usuario</label>
+      <input type="text" [(ngModel)]="username" placeholder="Tu nombre de usuario">
+    </div>
+
+    <div class="grupo-formulario">
+      <label>Contraseña</label>
+      <input type="password" [(ngModel)]="password" placeholder="Contraseña">
+    </div>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+    <p class="cargando" *ngIf="cargando">Iniciando sesión...</p>
+
+    <button class="btn-crear" (click)="iniciarSesion()">Iniciar sesión</button>
+  </div>
+
+  <div class="opciones">
+    <a routerLink="/registro">¿No tienes cuenta? Regístrate</a>
+  </div>
+</div>
+
+</div>

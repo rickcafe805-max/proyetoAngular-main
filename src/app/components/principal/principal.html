@@ -1,0 +1,234 @@
+<div class="pagina" [class.bloqueado-overlay]="bloqueado">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-marca">
+      <span class="marca-texto">NOMBRE DE LA MARCA</span>
+    </div>
+    <p class="seccion-titulo">General</p>
+    <div class="item activo">
+      <img src="iconos/icono1.png" class="item-icono-img" alt="Dashboard">
+      <span>Dashboard</span>
+    </div>
+    <div class="item" routerLink="/tareas">
+      <img src="iconos/icono2.png" class="item-icono-img" alt="Tareas">
+      <span>Registro de tareas</span>
+    </div>
+    <div class="item" routerLink="/calendario">
+      <img src="iconos/icono3.png" class="item-icono-img" alt="Calendario">
+      <span>Calendario</span>
+    </div>
+    <div class="item" routerLink="/journal">
+      <img src="iconos/icono5.png" class="item-icono-img" alt="Journal">
+      <span>Journal</span>
+    </div>
+    <p class="seccion-titulo">Herramientas</p>
+    <div class="item" (click)="abrirAjustes()">
+      <img src="iconos/icono6.png" class="item-icono-img" alt="Ajustes">
+      <span>Ajustes</span>
+    </div>
+    <div class="item" routerLink="/presentacion">
+      <img src="iconos/icono7.png" class="item-icono-img" alt="Cerrar sesión">
+      <span>Cerrar sesión</span>
+    </div>
+
+    <!-- MENÚ AJUSTES DESPLEGABLE -->
+    <div class="ajustes-menu" *ngIf="mostrarAjustes" (click)="$event.stopPropagation()">
+      <div class="ajustes-item">
+        <span>Modo oscuro</span>
+        <button class="toggle-oscuro" [class.activo]="temaService.modoOscuro()" (click)="temaService.toggle()">
+          <div class="toggle-circulo"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="contenido">
+    <div class="dashboard-body">
+
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="col-principal">
+
+        <div class="saludo-area">
+<!-- SALUDO -->
+<h1 class="saludo">{{ saludo }}, {{ nombreUsuario }}</h1>
+          <p class="sub-saludo">PEQUEÑO REPORTE DE LAS ESTADÍSTICAS</p>
+        </div>
+
+        <div class="tarjetas-grid">
+
+          <!-- NIVEL DE ESTRÉS -->
+          <div class="tarjeta amarilla">
+            <p class="tarjeta-titulo">Nivel de estrés</p>
+            <div class="gauge-container">
+              <svg viewBox="0 0 120 70" class="gauge-svg">
+                <path d="M10,60 A50,50 0 0,1 110,60" fill="none" stroke="#e0d0a0" stroke-width="12"
+                  stroke-linecap="round" />
+                <path d="M10,60 A50,50 0 0,1 110,60" fill="none" [attr.stroke]="gaugeColor" stroke-width="12"
+                  stroke-linecap="round" stroke-dasharray="157" [attr.stroke-dashoffset]="gaugeOffset" />
+              </svg>
+<div class="gauge-valor">
+  <span class="gauge-pts">{{ nivelEstresTotal }} pts</span>
+  <span class="gauge-label" [style.color]="gaugeColor">
+    {{ nivelEstresLabel }}
+  </span>
+</div>
+            </div>
+          </div>
+
+          <!-- PROGRESO -->
+          <div class="tarjeta rosa">
+            <p class="tarjeta-titulo">Progreso</p>
+            <div class="progreso-info">
+              <div class="progreso-numeros">
+                <img src="iconos/palomita.png" class="item-icono-img" alt="Tareas">
+  <span>✅ {{ tareasCompletadas }} completadas</span>
+  <span>📋 {{ tareasTotal }} total</span>
+              </div>
+              <div class="progreso-barra-wrap">
+  <div class="progreso-barra" [style.width]="porcentajeProgreso + '%'"></div>
+              </div>
+<p class="progreso-pct">{{ porcentajeProgreso }}%</p>
+            </div>
+          </div>
+
+          <!-- ESTADO ACTUAL -->
+<div class="tarjeta" [style.background-color]="estadoActual.color">
+            <p class="tarjeta-titulo">Estado actual</p>
+            <div class="estado-contenido">
+  <div class="estado-contenido">
+    <span class="estado-icono">{{ estadoActual.icono }}</span>
+    <span class="estado-label">{{ estadoActual.label }}</span>
+  </div>
+            </div>
+          </div>
+
+          <!-- MICRODESCANSO -->
+          <div class="tarjeta azul">
+            <p class="tarjeta-titulo">Microdescanso</p>
+            <p class="micro-sub">15 minutos para recargar energía</p>
+            <button class="btn-microdescanso" (click)="iniciarMicrodescanso()">
+              ▶ Iniciar pausa
+            </button>
+          </div>
+
+        </div>
+
+        <!-- AVATAR -->
+        <div class="avatar-area">
+          <div class="avatar-img">
+            <img [src]="avatarImg" alt="Avatar" *ngIf="avatarImg">
+            <span *ngIf="!avatarImg"> </span>
+          </div>
+          <div class="avatar-texto">
+<p class="avatar-recomendacion">{{ recomendacion }}</p>
+            <p class="avatar-sub">
+              Nivel de estrés: {{ nivelEstresLabel }}
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- COLUMNA DERECHA -->
+      <div class="col-lateral">
+
+        <!-- CALENDARIO -->
+        <div class="lateral-bloque">
+          <div class="lateral-header">
+            <p class="lateral-titulo">Calendario</p>
+            <button class="btn-lateral-img" (click)="abrirCalendario()">
+              <img src="iconos/calendario.png" class="icono-lateral" alt="Calendario">
+            </button>
+          </div>
+
+          <div class="calendario-mini" *ngIf="mesSeleccionado">
+            <p class="mes-anio-titulo">{{ mesSeleccionado }} {{ anioSeleccionado }}</p>
+            <div class="mini-weekdays">
+              <div *ngFor="let d of ['L','MAR','MIÉ','J','V','S','D']">{{ d }}</div>
+            </div>
+            <div class="mini-days">
+              <ng-container *ngFor="let day of diasMesSeleccionado">
+                <div class="mini-empty" *ngIf="day === 0"></div>
+                <div class="mini-day" *ngIf="day !== 0" [class.mini-hoy]="esHoy(day)"
+                  [class.mini-con-tarea]="tieneTareaEnDia(day)" [title]="tooltipTareasDia(day)">
+                  {{ day }}
+                  <span class="mini-punto" *ngIf="tieneTareaEnDia(day)"></span>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+
+          <p class="lateral-vacio" *ngIf="!mesSeleccionado">
+            Pulsa el icono para seleccionar un mes
+          </p>
+
+          <app-calendario [visible]="mostrarCalendario" (cerrar)="cerrarCalendario()"
+            (seleccionado)="onCalendarioSeleccionado($event)">
+          </app-calendario>
+        </div>
+
+        <!-- TO DO LIST -->
+        <div class="lateral-bloque lateral-tareas-bloque">
+          <div class="lateral-header">
+            <p class="lateral-titulo">Actividades por Hacer:</p>
+            <button class="btn-lateral" (click)="abrirCuadrado()">+</button>
+          </div>
+
+<ul class="lista-tareas" *ngIf="tareas.length > 0">
+  <li *ngFor="let tarea of tareas"
+    class="tarea-item"
+    [class.completada]="tarea.finalizada">
+    <button class="btn-check" (click)="completarTarea(tarea.id_tarea)">
+      {{ tarea.finalizada ? '✅' : '⬜' }}
+    </button>
+    <div class="tarea-item-info">
+      <span class="tarea-item-nombre">{{ tarea.nombre_tarea }}</span>
+      <span class="tarea-item-sub" *ngIf="tarea.fecha_entrega || tarea.materia">
+        {{ tarea.fecha_entrega }}{{ tarea.materia ? ' · ' + tarea.materia.nombre_materia : '' }}
+      </span>
+    </div>
+    <button class="btn-eliminar-tarea" (click)="eliminarTarea(tarea.id_tarea)">✖</button>
+  </li>
+</ul>
+
+          <p class="lateral-vacio" *ngIf="tareas.length === 0">
+            No hay tareas aún
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NUEVA TAREA RÁPIDA -->
+  <div class="modal-tarea" *ngIf="mostrarCuadrado" (click)="cerrarCuadrado()">
+    <div class="modal-contenido" (click)="$event.stopPropagation()">
+      <button class="btn-cerrar-modal" (click)="cerrarCuadrado()">✖</button>
+      <h3>Nueva tarea rápida</h3>
+      <input type="text" [(ngModel)]="nuevaTarea" placeholder="Escribe tu tarea..." class="input-tarea"
+        (keyup.enter)="agregarTareaRapida()">
+<button class="btn-confirmar" (click)="agregarTareaRapida()">Agregar</button>
+      <a routerLink="/tareas" class="link-tarea-completa" (click)="cerrarCuadrado()">
+        + Agregar con más detalles
+      </a>
+    </div>
+  </div>
+
+  <!-- MODAL MICRODESCANSO TIMER -->
+  <div class="modal-timer" *ngIf="mostrarTimer">
+    <div class="timer-contenido">
+      <p class="timer-titulo"> Microdescanso</p>
+      <p class="timer-sub">Descansa, vuelves en:</p>
+      <div class="timer-display">{{ timerFormato }}</div>
+      <p class="timer-msg">Aléjate de la pantalla y respira profundo</p>
+    </div>
+  </div>
+
+  <!-- OVERLAY BLOQUEADO -->
+  <div class="overlay-bloqueado" *ngIf="bloqueado && !mostrarTimer"></div>
+
+  <app-lista-tareas [visible]="mostrarLista" (cerrar)="cerrarLista()"></app-lista-tareas>
+
+</div>

@@ -1,0 +1,40 @@
+<div class="tarjetaInicio">
+  <div class="col-izquierda">
+    <div class="logo-area">
+      <span>LOGO</span>
+      <span>NOMBRE DE LA MARCA</span>
+    </div>
+    <div class="imagen-area">IMAGEN BONITA</div>
+    <button class="btn-volver" routerLink="/presentacion">↩</button>
+  </div>
+
+  <div class="contenedorAmarillo">
+    <h1>Inicia tu viaje</h1>
+    <div class="subtitulo">Completa tus datos para registrarte</div>
+
+    <div class="recuadro-formulario">
+      <div class="grupo-formulario">
+        <label>Nombre de usuario</label>
+        <input type="text" [(ngModel)]="nombre" placeholder="Tu nombre">
+      </div>
+
+      <div class="grupo-formulario">
+        <label>Correo electrónico</label>
+        <input type="email" [(ngModel)]="correo" placeholder="ejemplo@correo.com">
+      </div>
+
+      <div class="grupo-formulario">
+        <label>Contraseña</label>
+        <input type="password" [(ngModel)]="password" placeholder="Mínimo 6 caracteres">
+      </div>
+
+      <p class="error-mensaje" *ngIf="error">{{ error }}</p>
+
+    <button class="btn-crear" (click)="continuar()">Crear cuenta</button>
+    </div>
+
+    <div class="opciones">
+      ¿Ya tienes cuenta? <a routerLink="/inicio">Inicia sesión aquí</a>
+    </div>
+  </div>
+</div>

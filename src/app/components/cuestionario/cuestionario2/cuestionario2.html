@@ -1,0 +1,53 @@
+<div class="pagina">
+  <div class="logo-area">
+    <span>LOGO</span>
+    <span>NOMBRE DE LA MARCA</span>
+  </div>
+
+  <div class="contenedorAmarillo">
+    <div class="encabezado">
+      <div class="paso-badge">Paso 2 de 4</div>
+      <h1>Registra tus materias</h1>
+    </div>
+
+    <div class="fila-inputs">
+      <div class="grupo-formulario">
+        <label>Nombre de la materia</label>
+        <input type="text" [(ngModel)]="nombreMateria" placeholder="materia">
+      </div>
+      <div class="grupo-formulario">
+        <label>Docente</label>
+        <input type="text" [(ngModel)]="docente" placeholder="docente">
+      </div>
+    </div>
+
+    <div class="grupo-formulario">
+      <label>Color</label>
+      <div class="colores-fila">
+        <button *ngFor="let color of colores" class="circulo-color" [style.background-color]="color.hex"
+          [class.seleccionado]="colorSeleccionado?.id_color === color.id_color" (click)="colorSeleccionado = color"
+          [title]="color.nombre_color">
+        </button>
+      </div>
+    </div>
+
+    <button class="btn-agregar" (click)="agregarMateria()">+ Agregar materia</button>
+
+    <div class="contenedor-materias" *ngIf="materias.length > 0">
+      <h2 class="materia-titulo">Tus Materias</h2>
+      <div class="materia-item" *ngFor="let m of materias; let i = index">
+        <div class="materia-color" [style.background-color]="m.color"></div>
+        <div class="materia-info">
+          <span class="materia-nombre">{{ m.nombre }}</span>
+          <span class="materia-docente">{{ m.docente }}</span>
+        </div>
+        <button class="btn-eliminar" (click)="eliminarMateria(i)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="botones-nav">
+    <button class="btn-nav" routerLink="/cuestionario1">Anterior</button>
+<button class="btn-nav btn-continuar" (click)="continuar()">Continuar</button>
+  </div>
+</div>

@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=DM+Serif+Display&family=Poppins:wght@100;300;400;500;600;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --crema: #FFF8EE;
+  --amarillo: #F5C842;
+  --amarillo-suave: #F9DFA0;
+  --negro: #1A1A1A;
+  --rosa: #F4A0B5;
+  --rosa-boton: #EF8FA8;
+  --gris-texto: #555;
+  --blanco: #ffffff;
+  --borde-radio: 20px;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--crema);
+  color: var(--negro);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+}
+/* ══ MODO OSCURO GLOBAL ══ */
+body.dark-mode {
+  background-color: #0d0d0d !important;
+  color: #f0f0f0 !important;
+}
+
+/* Fondos de página */
+body.dark-mode .pagina {
+  background-color: #0d0d0d !important;
+}
+
+body.dark-mode .contenido {
+  background-color: #0d0d0d !important;
+}
+
+body.dark-mode .col-principal {
+  background-color: #0d0d0d !important;
+}
+
+/* Tarjetas del dashboard */
+body.dark-mode .tarjeta.amarilla {
+  background-color: #2a2506 !important;
+}
+
+body.dark-mode .tarjeta.rosa {
+  background-color: #2a0a12 !important;
+}
+
+body.dark-mode .tarjeta.azul {
+  background-color: #061a2a !important;
+}
+
+body.dark-mode .tarjeta-titulo,
+body.dark-mode .tarjeta-sub,
+body.dark-mode .micro-sub,
+body.dark-mode .gauge-pts,
+body.dark-mode .estado-label,
+body.dark-mode .progreso-pct {
+  color: #f0f0f0 !important;
+}
+
+/* Columna lateral */
+body.dark-mode .col-lateral {
+  background-color: #111111 !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .lateral-bloque {
+  border-color: #333 !important;
+}
+
+body.dark-mode .lateral-titulo {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .lateral-vacio {
+  color: #666 !important;
+}
+
+/* Tareas en sidebar */
+body.dark-mode .tarea-item {
+  background-color: #1a1a1a !important;
+}
+
+body.dark-mode .tarea-item-nombre {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .tarea-item-sub {
+  color: #888 !important;
+}
+
+/* Saludo */
+body.dark-mode .saludo {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .sub-saludo {
+  color: #888 !important;
+}
+
+/* Avatar */
+body.dark-mode .avatar-recomendacion {
+  color: #ddd !important;
+}
+
+body.dark-mode .avatar-sub {
+  color: #999 !important;
+}
+
+/* Mini calendario */
+body.dark-mode .calendario-mini {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+body.dark-mode .mes-anio-titulo {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .mini-weekdays div {
+  color: #888 !important;
+}
+
+body.dark-mode .mini-day {
+  color: #ddd !important;
+}
+
+body.dark-mode .mini-day:hover {
+  background-color: #333 !important;
+}
+
+body.dark-mode .mini-hoy {
+  background-color: #F5C842 !important;
+  color: #000 !important;
+}
+
+/* ── PÁGINA DE TAREAS ── */
+body.dark-mode .tarea-card {
+  background-color: #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+body.dark-mode .tarea-nombre {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .tarea-materia,
+body.dark-mode .tarea-fecha {
+  color: #aaa !important;
+}
+
+body.dark-mode .tag {
+  background-color: #2a2a2a !important;
+  color: #F5C842 !important;
+}
+
+body.dark-mode .contenido-header h1 {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .modal {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .modal h2 {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .campo label {
+  color: #ddd !important;
+}
+
+body.dark-mode .campo input,
+body.dark-mode .campo select {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .opciones-btn button {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .opciones-btn button.activo {
+  background-color: #F5C842 !important;
+  color: #000 !important;
+  border-color: #F5C842 !important;
+}
+
+body.dark-mode .estres-box {
+  background-color: #2a2a00 !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .modal-overlay {
+  background-color: rgba(0,0,0,0.7) !important;
+}
+
+/* ── PÁGINA DE CALENDARIO ── */
+body.dark-mode .mes-card {
+  background-color: #1a1a1a !important;
+  box-shadow: none !important;
+}
+
+body.dark-mode .mes-titulo {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .mini-weekdays div {
+  color: #777 !important;
+}
+
+body.dark-mode .mini-day {
+  color: #ccc !important;
+}
+
+body.dark-mode .mini-day:hover {
+  background-color: #333 !important;
+}
+
+body.dark-mode .hoy {
+  background-color: #F5C842 !important;
+  color: #000 !important;
+}
+
+/* ── JOURNAL ── */
+body.dark-mode .col-journal {
+  background-color: #111 !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .journal-dia {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .journal-fecha-completa {
+  color: #888 !important;
+}
+
+body.dark-mode .journal-header {
+  border-color: #333 !important;
+}
+
+body.dark-mode .lineas-fondo {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    #333 31px,
+    #333 32px
+  ) !important;
+}
+
+body.dark-mode .journal-textarea {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .journal-footer {
+  border-color: #333 !important;
+}
+
+body.dark-mode .journal-chars {
+  color: #555 !important;
+}
+
+body.dark-mode .col-completadas {
+  background-color: #111 !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .completadas-header h2 {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .completada-item {
+  background-color: #1a1a1a !important;
+}
+
+body.dark-mode .completada-nombre {
+  color: #888 !important;
+}
+
+body.dark-mode .completada-meta {
+  color: #666 !important;
+}
+
+body.dark-mode .tag-dif,
+body.dark-mode .tag-tipo {
+  background-color: #2a2a00 !important;
+  color: #F5C842 !important;
+}
+
+body.dark-mode .vacio-icono,
+body.dark-mode .vacio-texto,
+body.dark-mode .vacio-sub {
+  color: #555 !important;
+}
+
+/* Iconos negros que se vuelven blancos */
+body.dark-mode .item-icono-img {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* Modal de tarea rápida */
+body.dark-mode .modal-contenido {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .modal-contenido h3 {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .input-tarea {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+  color: #f0f0f0 !important;
+}
+
+/* Timer */
+body.dark-mode .timer-contenido {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .timer-titulo,
+body.dark-mode .timer-display {
+  color: #f0f0f0 !important;
+}
+
+/* Progreso numeros */
+body.dark-mode .progreso-numeros span {
+  color: #ddd !important;
+}
+
+body.dark-mode .progreso-barra-wrap {
+  background-color: #333 !important;
+}

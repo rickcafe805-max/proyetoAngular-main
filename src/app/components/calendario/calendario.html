@@ -1,0 +1,45 @@
+<div class="overlay" *ngIf="visible" (click)="cerrarCalendario()">
+  <div class="calendar" (click)="$event.stopPropagation()">
+
+    <button class="btn-cerrar" (click)="cerrarCalendario()">✖</button>
+
+    <div class="calendar-header">
+      <div class="year-picker">
+        <button class="nav-btn" (click)="previousYear()">←</button>
+        <span class="year-label">{{ currentYear() }}</span>
+        <button class="nav-btn" (click)="nextYear()">→</button>
+      </div>
+
+      <div class="month-selector">
+        <button class="month-picker" (click)="showMonthSelector = !showMonthSelector">
+          {{ month_names[currentMonth()] }} ▾
+        </button>
+        <div class="month-dropdown" *ngIf="showMonthSelector">
+          <div class="month-option"
+            *ngFor="let month of month_names; let i = index"
+            (click)="selectMonth(i)">
+            {{ month }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="weekdays">
+      <div class="weekday" *ngFor="let d of diasSemana">{{ d }}</div>
+    </div>
+
+    <div class="calendar-days">
+      <ng-container *ngFor="let day of daysInMonth">
+        <div class="empty-day" *ngIf="day === 0"></div>
+        <div class="calendar-day"
+          *ngIf="day !== 0"
+          [class.curr-date]="isToday(day)">
+          {{ day }}
+        </div>
+      </ng-container>
+    </div>
+
+    <button class="btn-seleccionar" (click)="seleccionar()">Seleccionar</button>
+
+  </div>
+</div>

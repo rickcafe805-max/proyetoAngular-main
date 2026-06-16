@@ -1,0 +1,157 @@
+<div class="pagina">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-marca">
+      <span class="marca-texto">NOMBRE DE LA MARCA</span>
+    </div>
+    <p class="seccion-titulo">General</p>
+    <div class="item" routerLink="/principal">
+      <img src="/iconos/icono1.png" class="item-icono-img" alt="Dashboard">
+      <span>Dashboard</span>
+    </div>
+    <div class="item activo">
+      <img src="/iconos/icono2.png" class="item-icono-img" alt="Tareas">
+      <span>Registro de tareas</span>
+    </div>
+    <div class="item" routerLink="/calendario">
+      <img src="/iconos/icono3.png" class="item-icono-img" alt="Calendario">
+      <span>Calendario</span>
+    </div>
+    <div class="item" routerLink="/journal">
+      <img src="/iconos/icono5.png" class="item-icono-img" alt="Journal">
+      <span>Journal</span>
+    </div>
+    <p class="seccion-titulo">Herramientas</p>
+    <div class="item" (click)="abrirAjustes()">
+      <img src="/iconos/icono6.png" class="item-icono-img" alt="Ajustes">
+      <span>Ajustes</span>
+    </div>
+    <div class="item" routerLink="/presentacion">
+      <img src="/iconos/icono7.png" class="item-icono-img" alt="Cerrar sesión">
+      <span>Cerrar sesión</span>
+    </div>
+
+    <!-- MENÚ AJUSTES DESPLEGABLE -->
+    <div class="ajustes-menu" *ngIf="mostrarAjustes" (click)="$event.stopPropagation()">
+      <div class="ajustes-item">
+        <span>Modo oscuro</span>
+        <button class="toggle-oscuro" [class.activo]="temaService.modoOscuro()" (click)="temaService.toggle()">
+          <div class="toggle-circulo"></div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="contenido">
+    <div class="contenido-header">
+      <h1>Registro de tareas</h1>
+      <button class="btn-nueva" (click)="mostrarForm = true">+ Nueva tarea</button>
+    </div>
+
+ <!-- Lista de tareas -->
+<div class="tarea-card" *ngFor="let t of tareas">
+  <div class="tarea-info">
+    <span class="tarea-nombre" [class.tachada]="t.finalizada">
+      {{ t.nombre_tarea }}
+    </span>
+    <span class="tarea-materia" *ngIf="t.materia">
+      {{ t.materia.nombre_materia }}
+    </span>
+    <span class="tarea-fecha" *ngIf="t.fecha_entrega">
+      📅 {{ t.fecha_entrega }}
+    </span>
+    <div class="tarea-tags">
+      <span class="tag">{{ t.dificultad }}</span>
+      <span class="tag">{{ t.prioridad }}</span>
+      <span class="tag" *ngIf="t.tipo">{{ t.tipo }}</span>
+      <span class="tag tag-pts">{{ t.puntos_estres }} pts</span>
+    </div>
+  </div>
+  <div class="tarea-acciones">
+    <button class="btn-completar" (click)="completarTarea(t.id_tarea)"
+      [title]="t.finalizada ? 'Completada' : 'Marcar como completada'">
+      {{ t.finalizada ? '✅' : '⬜' }}
+    </button>
+    <button class="btn-eliminar" (click)="eliminarTarea(t.id_tarea)">🗑️</button>
+  </div>
+</div>
+
+      <p class="vacio" *ngIf="tareas.length === 0">
+        No hay tareas registradas aún.
+      </p>
+
+    <!-- MODAL NUEVA TAREA -->
+    <div class="modal-overlay" *ngIf="mostrarForm" (click)="mostrarForm = false">
+      <div class="modal" (click)="$event.stopPropagation()">
+        <button class="btn-cerrar-modal" (click)="mostrarForm = false">✖</button>
+        <h2>Nueva tarea</h2>
+
+        <div class="campo">
+          <label>Nombre de la tarea</label>
+          <input type="text" [(ngModel)]="nombre" placeholder="tarea">
+        </div>
+
+        <div class="fila-dos">
+<div class="campo" *ngIf="materias.length > 0">
+  <label>Materia</label>
+  <select [(ngModel)]="materiaId">
+    <option [value]="null">Sin materia</option>
+    <option *ngFor="let m of materias" [value]="m.id_materia">
+      {{ m.nombre_materia }}
+    </option>
+  </select>
+</div>
+
+          <div class="campo">
+            <label>Fecha de entrega</label>
+            <input type="date" [(ngModel)]="fecha">
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Dificultad</label>
+          <div class="opciones-btn">
+            <button [class.activo]="dificultad === 'Baja'" (click)="dificultad = 'Baja'">Baja</button>
+            <button [class.activo]="dificultad === 'Media'" (click)="dificultad = 'Media'">Media</button>
+            <button [class.activo]="dificultad === 'Alta'" (click)="dificultad = 'Alta'">Alta</button>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Prioridad</label>
+          <div class="opciones-btn">
+            <button [class.activo]="prioridad === 'Baja'" (click)="prioridad = 'Baja'">Baja</button>
+            <button [class.activo]="prioridad === 'Media'" (click)="prioridad = 'Media'">Media</button>
+            <button [class.activo]="prioridad === 'Alta'" (click)="prioridad = 'Alta'">Alta</button>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label>Tipo de tarea</label>
+          <div class="opciones-btn">
+            <button [class.activo]="tipo === 'Individual'" (click)="tipo = 'Individual'">Individual</button>
+            <button [class.activo]="tipo === 'En equipo'" (click)="tipo = 'En equipo'">En equipo</button>
+          </div>
+        </div>
+
+        <div class="estres-box" *ngIf="dificultad && prioridad">
+          <span>CUIDADO</span>
+          <div>
+            <p><strong>Estrés generado</strong></p>
+            <p>{{ estresGenerado }} puntos</p>
+          </div>
+        </div>
+
+
+        
+        <div class="modal-botones">
+          <button class="btn-agregar" (click)="agregarTarea()">Agregar Tarea</button>
+          <button class="btn-cancelar" (click)="mostrarForm = false">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

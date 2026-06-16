@@ -1,0 +1,149 @@
+.presentacion-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--crema);
+}
+
+
+/* ── COLUMNA IZQUIERDA ── */
+.col-izquierda {
+  flex: 1;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.logo-icono {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 1.4rem;
+}
+
+.eslogan-area {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  justify-content: center;
+  align-items: flex-start;
+    align-items: center;
+}
+
+.eslogan {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.mision-vision {
+  font-size: 1.4rem;
+  color: var(--gris-texto);
+}
+
+.btn-registrate {
+  font-family: 'Poppins', sans-serif;
+  width: fit-content;
+  padding: 14px 28px;
+  background-color: var(--amarillo);
+  color: var(--negro);
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: 3px 4px 0px #c9a200;
+  transition: transform 0.1s;
+}
+
+.btn-registrate:hover {
+  transform: translateY(-2px);
+}
+
+.sobre-nosotros {
+  margin-top: auto;
+  padding-top: 40px;
+}
+
+.sobre-nosotros strong {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.sobre-nosotros p {
+  color: var(--gris-texto);
+  margin-top: 6px;
+  font-size: 0.95rem;
+}
+
+/* ── COLUMNA DERECHA ── */
+.col-derecha {
+  width: 380px;
+  background-color: var(--amarillo-suave);
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  border-radius: 20px 0 0 20px;
+}
+
+.bienvenida {
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.sub-bienvenida {
+  font-size: 1rem;
+  color: var(--gris-texto);
+  margin-top: -16px;
+}
+
+.btn-iniciar {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #f9a8c9, #f4c0d0);
+  color: var(--negro);
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  box-shadow: 3px 4px 0px #d97fa0;
+  transition: transform 0.1s;
+}
+
+.btn-iniciar:hover {
+  transform: translateY(-2px);
+}
+
+.tarjeta-noticia {
+  width: 100%;
+  background-color: #c9f0f0;
+  border-radius: 16px;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: var(--negro);
+  line-height: 1.5;
+  margin-top: 16px;
+}
+
+.col-derecha {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.col-derecha:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,158 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #FFF8EE;
+  position: relative;
+}
+
+.logo-area {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.contenedorAmarillo {
+  background-color: #F9DFA0;
+  border-radius: 24px;
+  padding: 32px 40px;
+  width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.encabezado {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.paso-badge {
+  background-color: #FFF7F1;
+  color: #E1B652;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 16px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.avatares-fila {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.avatar-opcion {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s, border-color 0.2s;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.avatar-opcion img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.avatar-opcion:hover {
+  transform: scale(1.08);
+}
+
+.avatar-opcion.seleccionado {
+  border-color: #1A1A1A;
+  transform: scale(1.08);
+}
+
+.como-funciona {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cf-titulo {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1A1A1A;
+}
+
+.cf-recuadro {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+
+.cf-recuadro ul {
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cf-recuadro li {
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.botones-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 520px;
+  margin-top: 20px;
+}
+
+.btn-nav {
+  font-family: 'Poppins', sans-serif;
+  padding: 14px 40px;
+  background-color: #ffffff;
+  color: #1A1A1A;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 2px 3px 0px #ccc;
+  transition: transform 0.1s;
+}
+
+.btn-nav:hover {
+  transform: translateY(-2px);
+}
+
+.btn-continuar {
+  background-color: #1A1A1A;
+  color: #ffffff;
+}

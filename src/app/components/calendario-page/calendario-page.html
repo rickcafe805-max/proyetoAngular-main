@@ -1,0 +1,73 @@
+<div class="pagina">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-marca">
+      <span class="marca-texto">NOMBRE DE LA MARCA</span>
+    </div>
+    <p class="seccion-titulo">General</p>
+    <div class="item" routerLink="/principal">
+      <img src="/iconos/icono1.png" class="item-icono-img" alt="Dashboard">
+      <span>Dashboard</span>
+    </div>
+    <div class="item" routerLink="/tareas">
+      <img src="/iconos/icono2.png" class="item-icono-img" alt="Tareas">
+      <span>Registro de tareas</span>
+    </div>
+    <div class="item activo">
+      <img src="/iconos/icono3.png" class="item-icono-img" alt="Calendario">
+      <span>Calendario</span>
+    </div>
+    <div class="item" routerLink="/journal">
+      <img src="/iconos/icono5.png" class="item-icono-img" alt="Journal">
+      <span>Journal</span>
+    </div>
+    <p class="seccion-titulo">Herramientas</p>
+    <div class="item" (click)="abrirAjustes()">
+      <img src="/iconos/icono6.png" class="item-icono-img" alt="Ajustes">
+      <span>Ajustes</span>
+    </div>
+    <div class="item" routerLink="/presentacion">
+      <img src="/iconos/icono7.png" class="item-icono-img" alt="Cerrar sesión">
+      <span>Cerrar sesión</span>
+    </div>
+
+    <!-- MENÚ AJUSTES DESPLEGABLE -->
+    <div class="ajustes-menu" *ngIf="mostrarAjustes" (click)="$event.stopPropagation()">
+      <div class="ajustes-item">
+        <span>Modo oscuro</span>
+        <button class="toggle-oscuro" [class.activo]="temaService.modoOscuro()" (click)="temaService.toggle()">
+          <div class="toggle-circulo"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="contenido">
+    <div class="contenido-header">
+      <h1>Calendario {{ anioActual }}</h1>
+    </div>
+
+    <div class="meses-grid">
+      <div class="mes-card" *ngFor="let mes of meses; let i = index">
+        <p class="mes-titulo">{{ mes }}</p>
+
+        <div class="mini-weekdays">
+          <div *ngFor="let d of diasSemana">{{ d }}</div>
+        </div>
+
+        <div class="mini-days">
+          <ng-container *ngFor="let dia of getDias(i)">
+            <div class="mini-empty" *ngIf="dia === 0"></div>
+            <div class="mini-day" *ngIf="dia !== 0" [class.hoy]="esHoy(dia, i)" [class.con-tarea]="tieneTarea(dia, i)"
+              [title]="tooltipTarea(dia, i)">
+              {{ dia }}
+              <span class="punto-tarea" *ngIf="tieneTarea(dia, i)"></span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

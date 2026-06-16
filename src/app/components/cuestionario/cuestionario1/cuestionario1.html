@@ -1,0 +1,61 @@
+<div class="pagina">
+    <div class="logo-area">
+        <span>LOGO</span>
+        <span>NOMBRE DE LA MARCA</span>
+    </div>
+
+    <div class="contenedorAmarillo">
+        <div class="paso-badge">Paso 1 de 4</div>
+        <h1>Cuéntanos sobre ti</h1>
+
+        <div class="grupo-formulario">
+            <label>¿Cuántos años tienes?</label>
+            <div class="recuadro-input">
+                <input type="number" [(ngModel)]="edad" placeholder="edad">
+            </div>
+        </div>
+
+        <div class="grupo-formulario">
+            <label>Nivel académico</label>
+            <div class="recuadro-input">
+                <select [(ngModel)]="nivelesAcademicos">
+                    <option value="">Selecciona...</option>
+                    <option>Preparatoria</option>
+                    <option>Universidad</option>
+                    <option>Posgrado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grupo-formulario">
+            <label>¿Cuáles son tus hobbies?</label>
+            <div class="recuadro-input hobbies-grid">
+                <label class="hobby-item" *ngFor="let hobby of hobbies">
+                    <input type="checkbox" [value]="hobby" (change)="toggleHobby(hobby)">
+                    {{ hobby }}
+                </label>
+            </div>
+        </div>
+
+        <div class="grupo-formulario">
+            <label>¿Cómo te sientes hoy?</label>
+            <div class="emojis-fila">
+                <button *ngFor="let e of emociones" class="emoji-btn" [class.seleccionado]="estadoAnimo === e.valor"
+                    (click)="estadoAnimo = e.valor">
+                    {{ e.emoji }}
+                </button>
+            </div>
+            <div class="barra-emociones">
+                <div class="punto-barra" *ngFor="let e of emociones"
+                    [class]="estadoAnimo >= e.valor ? 'punto-barra activo-' + e.valor : 'punto-barra'">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="botones-nav">
+        <button class="btn-nav" routerLink="/registro">Anterior</button>
+        <button class="btn-nav btn-continuar" routerLink="/cuestionario2">Continuar</button>
+    </div>
+</div>

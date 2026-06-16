@@ -1,0 +1,189 @@
+<div class="pagina">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-marca">
+      <span class="marca-texto">NOMBRE DE LA MARCA</span>
+    </div>
+    <p class="seccion-titulo">General</p>
+    <div class="item" routerLink="/principal">
+      <img src="iconos/icono1.png" class="item-icono-img" alt="Dashboard">
+      <span>Dashboard</span>
+    </div>
+    <div class="item" routerLink="/tareas">
+      <img src="iconos/icono2.png" class="item-icono-img" alt="Tareas">
+      <span>Registro de tareas</span>
+    </div>
+    <div class="item" routerLink="/calendario">
+      <img src="iconos/icono3.png" class="item-icono-img" alt="Calendario">
+      <span>Calendario</span>
+    </div>
+    <div class="item activo">
+      <img src="iconos/icono5.png" class="item-icono-img" alt="Journal">
+      <span>Journal</span>
+    </div>
+    <p class="seccion-titulo">Herramientas</p>
+    <div class="item" (click)="abrirAjustes()">
+      <img src="iconos/icono6.png" class="item-icono-img" alt="Ajustes">
+      <span>Ajustes</span>
+    </div>
+    <div class="item" routerLink="/presentacion">
+      <img src="iconos/icono7.png" class="item-icono-img" alt="Cerrar sesión">
+      <span>Cerrar sesión</span>
+    </div>
+
+    <div class="ajustes-menu" *ngIf="mostrarAjustes" (click)="$event.stopPropagation()">
+      <div class="ajustes-item">
+        <span>Modo oscuro</span>
+        <button class="toggle-oscuro"
+          [class.activo]="temaService.modoOscuro()"
+          (click)="temaService.toggle()">
+          <div class="toggle-circulo"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="contenido">
+
+    <!-- TABS -->
+    <div class="tabs-header">
+      <button class="tab-btn" [class.activo]="!viendoHistorial" (click)="viendoHistorial = false">
+        <img src="iconos/lapicin.png" class="icono-lateral" alt="Hoy">
+         Hoy
+      </button>
+      <button class="tab-btn" [class.activo]="viendoHistorial" (click)="viendoHistorial = true">
+        <img src="iconos/libros.png" class="icono-lateral" alt="Historial">
+         Historial
+      </button>
+    </div>
+
+    <!-- VISTA: HOY -->
+    <div class="vista-hoy" *ngIf="!viendoHistorial">
+      <div class="journal-layout">
+
+        <!-- COLUMNA ESCRITURA -->
+        <div class="col-journal">
+          <div class="journal-header">
+            <div class="linea-roja-lateral"></div>
+            <div class="journal-fecha-area">
+              <p class="journal-dia">{{ fechaFormateada.split(',')[0] | titlecase }}</p>
+              <p class="journal-fecha-completa">{{ fechaFormateada }}</p>
+            </div>
+          </div>
+
+          <div class="journal-body">
+            <div class="lineas-fondo">
+              <textarea
+                class="journal-textarea"
+                [(ngModel)]="contenido"
+                placeholder="Escribe aquí tus pensamientos del día...">
+              </textarea>
+            </div>
+          </div>
+
+          <div class="journal-footer">
+            <p class="journal-chars">{{ contenido.length }} caracteres</p>
+            <div class="estres-selector">
+  <label>¿Cómo fue tu nivel de estrés hoy?</label>
+  <div class="estres-opciones">
+    <button *ngFor="let n of [1,2,3,4,5]"
+      class="estres-btn"
+      [class.activo]="nivelEstresHoy === n"
+      (click)="nivelEstresHoy = n">
+      {{ n === 1 ? '😌' : n === 2 ? '🙂' : n === 3 ? '😐' : n === 4 ? '😟' : '😩' }}
+    </button>
+  </div>
+</div>
+            <button class="btn-guardar" (click)="guardarEntrada()">
+              <img src="iconos/guardadito.png" class="icono-lateral" alt="Guardar">
+              Guardar entrada
+            </button>
+            <div class="guardado-msg" *ngIf="guardado">
+              ✓ Guardado correctamente
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA TAREAS COMPLETADAS -->
+        <div class="col-completadas">
+          <div class="completadas-header">
+            <h2>Actividades de hoy</h2>
+            <span class="completadas-badge">{{ tareasCompletadasHoy.length }}</span>
+          </div>
+
+          <p class="completadas-aviso">
+            Estas actividades se guardarán junto con tu entrada del journal al presionar "Guardar entrada".
+          </p>
+
+          <div class="completadas-lista" *ngIf="tareasCompletadasHoy.length > 0">
+            <div class="completada-item" *ngFor="let tarea of tareasCompletadasHoy">
+              <div class="completada-check">✓</div>
+              <div class="completada-info">
+                <p class="completada-nombre">{{ tarea.nombre_tarea}}</p>
+                <p class="completada-meta" *ngIf="tarea.materia || tarea.fecha_entrega">
+                  {{ tarea.materia }}{{ tarea.materia && tarea.fecha_entrega? ' · ' : '' }}{{ tarea.fecha_entrega }}
+                </p>
+                <div class="completada-tags">
+                  <span class="tag-dif" *ngIf="tarea.dificultad">{{ tarea.dificultad }}</span>
+                  <span class="tag-tipo" *ngIf="tarea.tipo">{{ tarea.tipo }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="completadas-vacio" *ngIf="tareasCompletadasHoy.length === 0">
+            <p class="vacio-icono">( ˘ᵕ˘ )</p>
+            <p class="vacio-texto">Aún no has completado tareas hoy.</p>
+            <p class="vacio-sub">¡Tú puedes!</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VISTA: HISTORIAL -->
+    <div class="vista-historial" *ngIf="viendoHistorial">
+
+      <div class="historial-vacio" *ngIf="entradas.length === 0">
+        <p class="vacio-icono">( •_• )</p>
+        <p class="vacio-texto">No hay entradas guardadas aún.</p>
+        <p class="vacio-sub">Escribe y guarda tu primera entrada del día.</p>
+      </div>
+
+      <div class="entrada-card" *ngFor="let entrada of entradas">
+        <div class="entrada-header">
+          <div class="entrada-fecha-area">
+            <p class="entrada-dia">{{ entrada.fechaFormateada.split(',')[0] | titlecase }}</p>
+            <p class="entrada-fecha">{{ entrada.fechaFormateada }}</p>
+          </div>
+          <span class="entrada-actividades-badge">
+            {{ entrada.tareasCompletadas.length }} actividades
+          </span>
+        </div>
+
+        <div class="entrada-contenido" *ngIf="entrada.contenido">
+          <p>{{ entrada.contenido }}</p>
+        </div>
+
+        <div class="entrada-tareas" *ngIf="entrada.tareasCompletadas.length > 0">
+          <p class="entrada-tareas-titulo">Actividades completadas:</p>
+          <div class="entrada-tarea-item"
+            *ngFor="let t of entrada.tareasCompletadas">
+            <span class="entrada-tarea-check">✓</span>
+            <span class="entrada-tarea-nombre">{{ t.nombre }}</span>
+            <span class="entrada-tarea-meta" *ngIf="t.materia">{{ t.materia }}</span>
+            <span class="entrada-tarea-meta" *ngIf="t.fecha">{{ t.fecha }}</span>
+          </div>
+        </div>
+
+        <div class="entrada-sin-tareas"
+          *ngIf="entrada.tareasCompletadas.length === 0">
+          <p>Sin actividades registradas ese día.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

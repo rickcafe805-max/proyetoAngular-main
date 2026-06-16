@@ -1,0 +1,38 @@
+<div class="pagina">
+  <div class="logo-area">
+    <span>LOGO</span>
+    <span>NOMBRE DE LA MARCA</span>
+  </div>
+
+  <div class="contenedorAmarillo">
+    <div class="encabezado">
+      <div class="paso-badge">Paso 3 de 4</div>
+      <h1>Elige tu avatar</h1>
+    </div>
+
+    <div class="avatares-fila">
+      <div class="avatar-opcion"
+        *ngFor="let avatar of avatares"
+        [class.seleccionado]="avatarSeleccionado === avatar.id"
+        (click)="avatarSeleccionado = avatar.id">
+        <img [src]="avatar.img" [alt]="avatar.nombre">
+      </div>
+    </div>
+
+    <div class="como-funciona">
+      <p class="cf-titulo">¿Cómo funciona?</p>
+      <div class="cf-recuadro">
+        <ul>
+          <li>Tu avatar refleja tu nivel de estrés en tiempo real</li>
+          <li>Si acumulas mucho estrés, tu avatar mostrará preocupación</li>
+          <li>¡Mantén a tu avatar feliz completando tus tareas!</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="botones-nav">
+    <button class="btn-nav" routerLink="/cuestionario2">Anterior</button>
+<button class="btn-nav btn-continuar" (click)="continuar()">Continuar</button>
+  </div>
+</div>
