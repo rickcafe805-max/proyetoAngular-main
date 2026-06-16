@@ -1,7 +1,7 @@
 <div class="tarjetaInicio">
   <div class="col-izquierda">
     <div class="logo-area">
-      <span>LOGO</span>
+      <span>🌟</span>
       <span>NOMBRE DE LA MARCA</span>
     </div>
     <div class="imagen-area">IMAGEN BONITA</div>
@@ -13,9 +13,15 @@
     <div class="subtitulo">Completa tus datos para registrarte</div>
 
     <div class="recuadro-formulario">
+
+      <div class="grupo-formulario">
+        <label>Nombre completo</label>
+        <input type="text" [(ngModel)]="nombre" placeholder="Tu nombre completo">
+      </div>
+
       <div class="grupo-formulario">
         <label>Nombre de usuario</label>
-        <input type="text" [(ngModel)]="nombre" placeholder="Tu nombre">
+        <input type="text" [(ngModel)]="username" placeholder="Nombre de usuario único">
       </div>
 
       <div class="grupo-formulario">
@@ -28,9 +34,9 @@
         <input type="password" [(ngModel)]="password" placeholder="Mínimo 6 caracteres">
       </div>
 
-      <p class="error-mensaje" *ngIf="error">{{ error }}</p>
+      <p class="error-mensaje" *ngIf="error" style="color:red; font-size:0.85rem">{{ error }}</p>
 
-    <button class="btn-crear" (click)="continuar()">Crear cuenta</button>
+      <button class="boton" (click)="continuar()">Crear cuenta</button>
     </div>
 
     <div class="opciones">
