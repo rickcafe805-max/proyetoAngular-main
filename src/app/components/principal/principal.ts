@@ -9,7 +9,7 @@ import { DashboardApiService } from '../../services/api/dashboard-api.service';
 import { PerfilApiService } from '../../services/api/perfil-api.service';
 import { TareasApiService, TareaApi } from '../../services/api/tareas-api.service';
 import { HobbysApiService } from '../../services/api/hobbys-api.service';
-
+import { MateriasApiService } from '../../services/api/materias-api.service';
 
 @Component({
   selector: 'app-principal',
@@ -26,12 +26,14 @@ export class Principal implements OnInit, OnDestroy {
     private perfilApi: PerfilApiService,
     private tareasApi: TareasApiService,
     private cdr: ChangeDetectorRef,
-    private hobbysApi: HobbysApiService
+    private hobbysApi: HobbysApiService,
+    private materiasApi: MateriasApiService
   ) {}
 
   // DATOS DEL DASHBOARD
   dashboard: any = null;
   cargando = true;
+  materias: any[] = [];
 
   // DATOS CALCULADOS
   nombreUsuario = '';
@@ -71,6 +73,14 @@ ngOnInit() {
   this.cargarDashboard();
   this.cargarTareas();
   this.cargarHobbies();
+  this.cargarMaterias();
+}
+
+cargarMaterias() {
+  this.materiasApi.getMaterias().subscribe({
+    next: (m) => this.materias = m,
+    error: () => {}
+  });
 }
 
 cargarHobbies() {
@@ -197,13 +207,18 @@ generarRecomendacion() {
 agregarTareaRapida() {
   if (!this.nuevaTarea.trim()) return;
 
-  const hoy = new Date().toISOString().split('T')[0];
+  if (this.materias.length === 0) {
+    alert('Necesitas tener al menos una materia registrada para agregar tareas.');
+    return;
+  }
 
-  const dto: any = {
+  const hoy = new Date().toISOString().split('T')[0];
+  const dto = {
     nombre_tarea: this.nuevaTarea.trim(),
     dificultad: 1,
     prioridad: 1,
-    fecha: hoy
+    fecha: hoy,
+    tarea_materia: this.materias[0].id_materia
   };
 
   this.tareasApi.crear(dto).subscribe({

@@ -65,9 +65,14 @@ cargarMaterias() {
 
 agregarTarea() {
   if (!this.nombre || !this.dificultad || !this.prioridad || !this.fecha) {
-    alert('Por favor completa nombre, dificultad, prioridad y fecha.');
+    alert('Completa nombre, dificultad, prioridad y fecha.');
     return;
   }
+  if (!this.materiaId) {
+    alert('Debes seleccionar una materia. Si no tienes materias, agrégalas primero.');
+    return;
+  }
+
   this.cargando = true;
 
   const dificultadNum = this.dificultad === 'Alta' ? 3 :
@@ -75,17 +80,15 @@ agregarTarea() {
   const prioridadNum = this.prioridad === 'Alta' ? 3 :
                        this.prioridad === 'Media' ? 2 : 1;
 
-  const dto: any = {
+  const dto = {
     nombre_tarea: this.nombre,
     dificultad: dificultadNum,
     prioridad: prioridadNum,
     fecha: this.fecha,
+    tarea_materia: this.materiaId
   };
 
-  if (this.materiaId) dto.tarea_materia = this.materiaId;
-
-  console.log('Enviando tarea:', dto);
-  console.log('DTO FINAL:', JSON.stringify(dto));
+  console.log('Enviando tarea:', JSON.stringify(dto));
 
   this.tareasApi.crear(dto).subscribe({
     next: () => {
