@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TareasApiService, TareaApi, TareaDto } from '../../services/api/tareas-api.service';
 import { MateriasApiService } from '../../services/api/materias-api.service';
 import { TemaService } from '../../services/tema.service';
+
+
 
 @Component({
   selector: 'app-tareas',
@@ -17,7 +19,8 @@ export class Tareas implements OnInit {
   constructor(
     private tareasApi: TareasApiService,
     private materiasApi: MateriasApiService,
-    public temaService: TemaService
+    public temaService: TemaService,
+    private router: Router 
   ) {}
 
   tareas: TareaApi[] = [];
@@ -50,6 +53,13 @@ coloresDisponibles = [
   { id_color: 7, hex: '#F4C5A0' },
   { id_color: 8, hex: '#D4A0C8' },
 ];
+
+cerrarSesion() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('nombre');
+  localStorage.removeItem('username');
+  this.router.navigate(['/presentacion']);
+}
 
   ngOnInit() {
     this.cargarTareas();

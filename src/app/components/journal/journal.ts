@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { NgIf, NgFor, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TareasApiService, TareaApi } from '../../services/api/tareas-api.service';
@@ -25,7 +25,8 @@ export class Journal implements OnInit {
   constructor(
     private tareasApi: TareasApiService,
     private perfilApi: PerfilApiService,
-    public temaService: TemaService
+    public temaService: TemaService,
+    private router: Router
   ) {}
 
   fechaHoy = new Date();
@@ -131,4 +132,11 @@ export class Journal implements OnInit {
 
   mostrarAjustes = false;
   abrirAjustes() { this.mostrarAjustes = !this.mostrarAjustes; }
+
+  cerrarSesion() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('nombre');
+  localStorage.removeItem('username');
+  this.router.navigate(['/presentacion']);
+}
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { NgIf, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ListaTareas } from '../lista-tareas/lista-tareas';
@@ -10,6 +10,8 @@ import { PerfilApiService } from '../../services/api/perfil-api.service';
 import { TareasApiService, TareaApi } from '../../services/api/tareas-api.service';
 import { HobbysApiService } from '../../services/api/hobbys-api.service';
 import { MateriasApiService } from '../../services/api/materias-api.service';
+
+
 
 @Component({
   selector: 'app-principal',
@@ -27,7 +29,8 @@ export class Principal implements OnInit, OnDestroy {
     private tareasApi: TareasApiService,
     private cdr: ChangeDetectorRef,
     private hobbysApi: HobbysApiService,
-    private materiasApi: MateriasApiService
+    private materiasApi: MateriasApiService,
+    private router: Router
   ) {}
 
   // DATOS DEL DASHBOARD
@@ -74,6 +77,13 @@ ngOnInit() {
   this.cargarTareas();
   this.cargarHobbies();
   this.cargarMaterias();
+}
+
+cerrarSesion() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('nombre');
+  localStorage.removeItem('username');
+  this.router.navigate(['/presentacion']);
 }
 
 cargarMaterias() {

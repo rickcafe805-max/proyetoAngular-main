@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { TareasApiService, TareaApi } from '../../services/api/tareas-api.service';
 import { TemaService } from '../../services/tema.service';
@@ -14,7 +14,8 @@ import { TemaService } from '../../services/tema.service';
 export class CalendarioPage implements OnInit {
   constructor(
     private tareasApi: TareasApiService,
-    public temaService: TemaService
+    public temaService: TemaService,
+    private router: Router
   ) {}
 
   tareas: TareaApi[] = [];
@@ -66,4 +67,11 @@ getTareasDelDia(dia: number, mes: number): TareaApi[] {
 
   mostrarAjustes = false;
   abrirAjustes() { this.mostrarAjustes = !this.mostrarAjustes; }
+
+  cerrarSesion() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('nombre');
+  localStorage.removeItem('username');
+  this.router.navigate(['/presentacion']);
+}
 }

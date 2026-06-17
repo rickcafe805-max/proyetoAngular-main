@@ -27,10 +27,10 @@
       <img src="iconos/icono6.png" class="item-icono-img" alt="Ajustes">
       <span>Ajustes</span>
     </div>
-    <div class="item" routerLink="/presentacion">
-      <img src="iconos/icono7.png" class="item-icono-img" alt="Cerrar sesión">
-      <span>Cerrar sesión</span>
-    </div>
+<div class="item" (click)="cerrarSesion()">
+  <img src="iconos/icono7.png" class="item-icono-img" alt="Cerrar sesión">
+  <span>Cerrar sesión</span>
+</div>
 
     <div class="ajustes-menu" *ngIf="mostrarAjustes" (click)="$event.stopPropagation()">
       <div class="ajustes-item">
