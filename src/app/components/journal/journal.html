@@ -122,12 +122,11 @@
               <div class="completada-check">✓</div>
               <div class="completada-info">
                 <p class="completada-nombre">{{ tarea.nombre_tarea}}</p>
-                <p class="completada-meta" *ngIf="tarea.materia || tarea.fecha_entrega">
-                  {{ tarea.materia }}{{ tarea.materia && tarea.fecha_entrega? ' · ' : '' }}{{ tarea.fecha_entrega }}
+                <p class="completada-meta" *ngIf="tarea.materia || tarea.fecha">
+                  {{ tarea.materia }}{{ tarea.materia && tarea.fecha? ' · ' : '' }}{{ tarea.fecha }}
                 </p>
                 <div class="completada-tags">
                   <span class="tag-dif" *ngIf="tarea.dificultad">{{ tarea.dificultad }}</span>
-                  <span class="tag-tipo" *ngIf="tarea.tipo">{{ tarea.tipo }}</span>
                 </div>
               </div>
             </div>
