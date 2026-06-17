@@ -64,22 +64,24 @@ cargarMaterias() {
   }
 
 agregarTarea() {
-  if (!this.nombre || !this.dificultad || !this.prioridad) return;
+  if (!this.nombre || !this.dificultad || !this.prioridad || !this.fecha) {
+    alert('Por favor completa nombre, dificultad, prioridad y fecha.');
+    return;
+  }
   this.cargando = true;
 
   const dificultadNum = this.dificultad === 'Alta' ? 3 :
                         this.dificultad === 'Media' ? 2 : 1;
-  const prioridadNum = this.prioridad === 'Alta' ? 2 :
-                       this.prioridad === 'Media' ? 1 : 0;
+  const prioridadNum = this.prioridad === 'Alta' ? 3 :
+                       this.prioridad === 'Media' ? 2 : 1;
 
-  // Solo incluir tarea_materia si hay una seleccionada
   const dto: any = {
     nombre_tarea: this.nombre,
     dificultad: dificultadNum,
     prioridad: prioridadNum,
+    fecha: this.fecha,
   };
 
-  if (this.fecha) dto.fecha = this.fecha;
   if (this.materiaId) dto.tarea_materia = this.materiaId;
 
   console.log('Enviando tarea:', dto);

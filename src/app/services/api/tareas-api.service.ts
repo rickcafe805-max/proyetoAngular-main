@@ -4,10 +4,10 @@ import { environment } from '../../../environments/environment';
 
 export interface TareaDto {
   nombre_tarea: string;
-  dificultad: number;
-  prioridad: number;
+  dificultad: number;  // 1, 2 o 3
+  prioridad: number;   // 1, 2 o 3
   tarea_materia?: number;
-  fecha?: string;
+  fecha: string;       // requerida, formato YYYY-MM-DD
 }
 
 export interface TareaApi {

@@ -196,11 +196,16 @@ generarRecomendacion() {
 
 agregarTareaRapida() {
   if (!this.nuevaTarea.trim()) return;
+
+  const hoy = new Date().toISOString().split('T')[0];
+
   const dto: any = {
     nombre_tarea: this.nuevaTarea.trim(),
     dificultad: 1,
-    prioridad: 0,
+    prioridad: 1,
+    fecha: hoy
   };
+
   this.tareasApi.crear(dto).subscribe({
     next: () => {
       this.nuevaTarea = '';

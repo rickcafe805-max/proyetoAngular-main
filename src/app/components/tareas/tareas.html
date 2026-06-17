@@ -51,36 +51,36 @@
       <button class="btn-nueva" (click)="mostrarForm = true">+ Nueva tarea</button>
     </div>
 
- <!-- Lista de tareas -->
-<div class="tarea-card" *ngFor="let t of tareas">
-  <div class="tarea-info">
-    <span class="tarea-nombre" [class.tachada]="t.finalizada">
-      {{ t.nombre_tarea }}
-    </span>
-    <span class="tarea-materia" *ngIf="t.materia">
-      {{ t.materia.nombre_materia }}
-    </span>
-    <span class="tarea-fecha" *ngIf="t.fecha">
-      📅 {{ t.fecha }}
-    </span>
-<div class="tarea-tags">
-  <span class="tag">{{ t.dificultad }}</span>
-  <span class="tag">{{ t.prioridad }}</span>
-  <span class="tag tag-pts">{{ t.puntos_estres }} pts</span>
-</div>
-  </div>
-  <div class="tarea-acciones">
-    <button class="btn-completar" (click)="completarTarea(t.id_tarea)"
-      [title]="t.finalizada ? 'Completada' : 'Marcar como completada'">
-      {{ t.finalizada ? '✅' : '⬜' }}
-    </button>
-    <button class="btn-eliminar" (click)="eliminarTarea(t.id_tarea)">🗑️</button>
-  </div>
-</div>
+    <!-- Lista de tareas -->
+    <div class="tarea-card" *ngFor="let t of tareas">
+      <div class="tarea-info">
+        <span class="tarea-nombre" [class.tachada]="t.finalizada">
+          {{ t.nombre_tarea }}
+        </span>
+        <span class="tarea-materia" *ngIf="t.materia">
+          {{ t.materia.nombre_materia }}
+        </span>
+        <span class="tarea-fecha" *ngIf="t.fecha">
+          📅 {{ t.fecha }}
+        </span>
+        <div class="tarea-tags">
+          <span class="tag">{{ t.dificultad }}</span>
+          <span class="tag">{{ t.prioridad }}</span>
+          <span class="tag tag-pts">{{ t.puntos_estres }} pts</span>
+        </div>
+      </div>
+      <div class="tarea-acciones">
+        <button class="btn-completar" (click)="completarTarea(t.id_tarea)"
+          [title]="t.finalizada ? 'Completada' : 'Marcar como completada'">
+          {{ t.finalizada ? '✅' : '⬜' }}
+        </button>
+        <button class="btn-eliminar" (click)="eliminarTarea(t.id_tarea)">🗑️</button>
+      </div>
+    </div>
 
-      <p class="vacio" *ngIf="tareas.length === 0">
-        No hay tareas registradas aún.
-      </p>
+    <p class="vacio" *ngIf="tareas.length === 0">
+      No hay tareas registradas aún.
+    </p>
 
     <!-- MODAL NUEVA TAREA -->
     <div class="modal-overlay" *ngIf="mostrarForm" (click)="mostrarForm = false">
@@ -94,63 +94,62 @@
         </div>
 
         <div class="fila-dos">
-<div class="campo" *ngIf="materias.length > 0">
-  <label>Materia</label>
-  <select [(ngModel)]="materiaId">
-    <option [value]="null">Sin materia</option>
-    <option *ngFor="let m of materias" [value]="m.id_materia">
-      {{ m.nombre_materia }}
-    </option>
-  </select>
-</div>
+          <div class="campo" *ngIf="materias.length > 0">
+            <label>Materia</label>
+            <select [(ngModel)]="materiaId">
+              <option [value]="null">Sin materia</option>
+              <option *ngFor="let m of materias" [value]="m.id_materia">
+                {{ m.nombre_materia }}
+              </option>
+            </select>
+          </div>
 
           <div class="campo">
-            <label>Fecha de entrega</label>
-            <input type="date" [(ngModel)]="fecha">
+            <label>Fecha de entrega *</label>
+            <input type="date" [(ngModel)]="fecha" required>
           </div>
-        </div>
 
-        <div class="campo">
-          <label>Dificultad</label>
-          <div class="opciones-btn">
-            <button [class.activo]="dificultad === 'Baja'" (click)="dificultad = 'Baja'">Baja</button>
-            <button [class.activo]="dificultad === 'Media'" (click)="dificultad = 'Media'">Media</button>
-            <button [class.activo]="dificultad === 'Alta'" (click)="dificultad = 'Alta'">Alta</button>
+          <div class="campo">
+            <label>Dificultad</label>
+            <div class="opciones-btn">
+              <button [class.activo]="dificultad === 'Baja'" (click)="dificultad = 'Baja'">Baja</button>
+              <button [class.activo]="dificultad === 'Media'" (click)="dificultad = 'Media'">Media</button>
+              <button [class.activo]="dificultad === 'Alta'" (click)="dificultad = 'Alta'">Alta</button>
+            </div>
           </div>
-        </div>
 
-        <div class="campo">
-          <label>Prioridad</label>
-          <div class="opciones-btn">
-            <button [class.activo]="prioridad === 'Baja'" (click)="prioridad = 'Baja'">Baja</button>
-            <button [class.activo]="prioridad === 'Media'" (click)="prioridad = 'Media'">Media</button>
-            <button [class.activo]="prioridad === 'Alta'" (click)="prioridad = 'Alta'">Alta</button>
+          <div class="campo">
+            <label>Prioridad</label>
+            <div class="opciones-btn">
+              <button [class.activo]="prioridad === 'Baja'" (click)="prioridad = 'Baja'">Baja</button>
+              <button [class.activo]="prioridad === 'Media'" (click)="prioridad = 'Media'">Media</button>
+              <button [class.activo]="prioridad === 'Alta'" (click)="prioridad = 'Alta'">Alta</button>
+            </div>
           </div>
-        </div>
 
-        <div class="campo">
-          <label>Tipo de tarea</label>
-          <div class="opciones-btn">
-            <button [class.activo]="tipo === 'Individual'" (click)="tipo = 'Individual'">Individual</button>
-            <button [class.activo]="tipo === 'En equipo'" (click)="tipo = 'En equipo'">En equipo</button>
+          <div class="campo">
+            <label>Tipo de tarea</label>
+            <div class="opciones-btn">
+              <button [class.activo]="tipo === 'Individual'" (click)="tipo = 'Individual'">Individual</button>
+              <button [class.activo]="tipo === 'En equipo'" (click)="tipo = 'En equipo'">En equipo</button>
+            </div>
           </div>
-        </div>
 
-        <div class="estres-box" *ngIf="dificultad && prioridad">
-          <span>CUIDADO</span>
-          <div>
-            <p><strong>Estrés generado</strong></p>
-            <p>{{ estresGenerado }} puntos</p>
+          <div class="estres-box" *ngIf="dificultad && prioridad">
+            <span>CUIDADO</span>
+            <div>
+              <p><strong>Estrés generado</strong></p>
+              <p>{{ estresGenerado }} puntos</p>
+            </div>
           </div>
-        </div>
 
 
-        
-        <div class="modal-botones">
-          <button class="btn-agregar" (click)="agregarTarea()">Agregar Tarea</button>
-          <button class="btn-cancelar" (click)="mostrarForm = false">Cancelar</button>
+
+          <div class="modal-botones">
+            <button class="btn-agregar" (click)="agregarTarea()">Agregar Tarea</button>
+            <button class="btn-cancelar" (click)="mostrarForm = false">Cancelar</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
