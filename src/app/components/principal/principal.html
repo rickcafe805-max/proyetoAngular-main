@@ -185,14 +185,13 @@
     </button>
     <div class="tarea-item-info">
       <span class="tarea-item-nombre">{{ tarea.nombre_tarea }}</span>
-      <span class="tarea-item-sub" *ngIf="tarea.fecha_entrega || tarea.materia">
-        {{ tarea.fecha_entrega }}{{ tarea.materia ? ' · ' + tarea.materia.nombre_materia : '' }}
+      <span class="tarea-item-sub" *ngIf="tarea.fecha || tarea.materia">
+        {{ tarea.fecha }}{{ tarea.materia ? ' · ' + tarea.materia.nombre_materia : '' }}
       </span>
     </div>
     <button class="btn-eliminar-tarea" (click)="eliminarTarea(tarea.id_tarea)">✖</button>
   </li>
 </ul>
-
           <p class="lateral-vacio" *ngIf="tareas.length === 0">
             No hay tareas aún
           </p>

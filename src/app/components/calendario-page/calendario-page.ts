@@ -49,10 +49,10 @@ export class CalendarioPage implements OnInit {
     return dia === hoy.getDate() && mes === hoy.getMonth() && this.anioActual === hoy.getFullYear();
   }
 
-  getTareasDelDia(dia: number, mes: number): TareaApi[] {
-    const fechaStr = `${this.anioActual}-${String(mes + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-    return this.tareas.filter(t => t.fecha_entrega === fechaStr);
-  }
+getTareasDelDia(dia: number, mes: number): TareaApi[] {
+  const fechaStr = `${this.anioActual}-${String(mes + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+  return this.tareas.filter(t => t.fecha === fechaStr);
+}
 
   tieneTarea(dia: number, mes: number): boolean {
     return this.getTareasDelDia(dia, mes).length > 0;

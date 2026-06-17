@@ -57,34 +57,42 @@ export class Tareas implements OnInit {
     return d + p;
   }
 
-  agregarTarea() {
-    if (!this.nombre || !this.dificultad || !this.prioridad) return;
-    this.cargando = true;
+agregarTarea() {
+  if (!this.nombre || !this.dificultad || !this.prioridad) return;
+  this.cargando = true;
 
-    const dto: TareaDto = {
-      nombre_tarea: this.nombre,
-      dificultad: this.dificultad.toLowerCase() as 'baja' | 'media' | 'alta',
-      prioridad: this.prioridad.toLowerCase() as 'baja' | 'media' | 'alta',
-      fecha_entrega: this.fecha || undefined,
-      id_materia: this.materiaId || undefined,
-      tipo: this.tipo || undefined,
-    };
+  // Convertir string a número
+  const dificultadNum = this.dificultad === 'Alta' ? 3 :
+                        this.dificultad === 'Media' ? 2 : 1;
+  const prioridadNum = this.prioridad === 'Alta' ? 2 :
+                       this.prioridad === 'Media' ? 1 : 0;
 
-    this.tareasApi.crear(dto).subscribe({
-      next: () => {
-        this.nombre = '';
-        this.materiaId = null;
-        this.fecha = '';
-        this.dificultad = '';
-        this.prioridad = '';
-        this.tipo = '';
-        this.mostrarForm = false;
-        this.cargando = false;
-        this.cargarTareas();
-      },
-      error: () => { this.cargando = false; }
-    });
-  }
+  const dto: TareaDto = {
+    nombre_tarea: this.nombre,
+    dificultad: dificultadNum,
+    prioridad: prioridadNum,
+    fecha: this.fecha || undefined,
+    tarea_materia: this.materiaId || undefined,
+  };
+
+  this.tareasApi.crear(dto).subscribe({
+    next: () => {
+      this.nombre = '';
+      this.materiaId = null;
+      this.fecha = '';
+      this.dificultad = '';
+      this.prioridad = '';
+      this.tipo = '';
+      this.mostrarForm = false;
+      this.cargando = false;
+      this.cargarTareas();
+    },
+    error: (err) => {
+      console.log('Error tarea:', err.error);
+      this.cargando = false;
+    }
+  });
+}
 
   eliminarTarea(id: number) {
     this.tareasApi.eliminar(id).subscribe({

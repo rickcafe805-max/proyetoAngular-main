@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 export interface MateriaDto {
   nombre_materia: string;
   maestro: string;
-  id_color: number;
+  materia_color: number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -19,6 +19,7 @@ export class MateriasApiService {
   }
 
   crearMateria(dto: MateriaDto) {
+    console.log('Creando materia:', dto);
     return this.http.post<any>(`${this.base}/cmaterias`, dto);
   }
 

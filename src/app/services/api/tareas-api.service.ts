@@ -4,20 +4,18 @@ import { environment } from '../../../environments/environment';
 
 export interface TareaDto {
   nombre_tarea: string;
-  id_materia?: number;
-  fecha_entrega?: string;
-  dificultad: 'baja' | 'media' | 'alta';
-  prioridad: 'baja' | 'media' | 'alta';
-  tipo?: string;
+  dificultad: number;
+  prioridad: number;
+  tarea_materia?: number;
+  fecha?: string;
 }
 
 export interface TareaApi {
   id_tarea: number;
   nombre_tarea: string;
-  fecha_entrega?: string;
-  dificultad: string;
-  prioridad: string;
-  tipo?: string;
+  fecha?: string;
+  dificultad: number;
+  prioridad: number;
   finalizada: boolean;
   puntos_estres: number;
   materia?: { id_materia: number; nombre_materia: string };
@@ -33,11 +31,8 @@ export class TareasApiService {
     return this.http.get<TareaApi[]>(`${this.base}/f.tareas`);
   }
 
-  getOne(id: number) {
-    return this.http.get<TareaApi>(`${this.base}/f.tareas/${id}`);
-  }
-
   crear(dto: TareaDto) {
+    console.log('Creando tarea:', dto);
     return this.http.post<TareaApi>(`${this.base}/f.tareas`, dto);
   }
 

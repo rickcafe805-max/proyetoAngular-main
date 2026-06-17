@@ -48,8 +48,16 @@ export class Journal implements OnInit {
     this.cargarTareas();
   }
 
+  get usuarioKey(): string {
+    return localStorage.getItem('username') || 'anonimo';
+  }
+
   getFechaKey(fecha: Date): string {
-    return fecha.toISOString().split('T')[0];
+    return `${this.usuarioKey}_${fecha.toISOString().split('T')[0]}`;
+  }
+
+  get indiceKey(): string {
+    return `journal_indice_${this.usuarioKey}`;
   }
 
   get fechaFormateada(): string {
@@ -81,27 +89,27 @@ export class Journal implements OnInit {
       tareasCompletadas: this.tareasCompletadasHoy.map(t => ({
         nombre: t.nombre_tarea,
         materia: t.materia?.nombre_materia || '',
-        fecha: t.fecha_entrega || ''
+        fecha: t.fecha || ''
       }))
     };
 
-    // Guardar en localStorage
     localStorage.setItem(`journal_${this.fechaKey}`, JSON.stringify(entrada));
 
-    // Actualizar índice
     const indice: string[] = JSON.parse(
-      localStorage.getItem('journal_indice') || '[]'
+      localStorage.getItem(this.indiceKey) || '[]'
     );
     if (!indice.includes(this.fechaKey)) {
       indice.push(this.fechaKey);
-      localStorage.setItem('journal_indice', JSON.stringify(indice));
+      localStorage.setItem(this.indiceKey, JSON.stringify(indice));
     }
 
-    // Enviar nivel de estrés a la API
     this.perfilApi.registrarDiario({
       nivel_estres: this.nivelEstresHoy,
       que_ayudo: this.contenido.substring(0, 200)
-    }).subscribe();
+    }).subscribe({
+      next: () => console.log('Diario guardado en API'),
+      error: (err) => console.log('Error guardando diario:', err.error)
+    });
 
     this.guardado = true;
     setTimeout(() => this.guardado = false, 3000);
@@ -110,7 +118,7 @@ export class Journal implements OnInit {
 
   cargarEntradas() {
     const indice: string[] = JSON.parse(
-      localStorage.getItem('journal_indice') || '[]'
+      localStorage.getItem(this.indiceKey) || '[]'
     );
     this.entradas = indice
       .map(key => {

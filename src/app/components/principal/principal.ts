@@ -8,6 +8,8 @@ import { TemaService } from '../../services/tema.service';
 import { DashboardApiService } from '../../services/api/dashboard-api.service';
 import { PerfilApiService } from '../../services/api/perfil-api.service';
 import { TareasApiService, TareaApi } from '../../services/api/tareas-api.service';
+import { HobbysApiService } from '../../services/api/hobbys-api.service';
+
 
 @Component({
   selector: 'app-principal',
@@ -23,7 +25,8 @@ export class Principal implements OnInit, OnDestroy {
     private dashboardApi: DashboardApiService,
     private perfilApi: PerfilApiService,
     private tareasApi: TareasApiService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private hobbysApi: HobbysApiService
   ) {}
 
   // DATOS DEL DASHBOARD
@@ -39,7 +42,8 @@ export class Principal implements OnInit, OnDestroy {
   tareasTotal = 0;
   porcentajeProgreso = 0;
   estadoActual = { icono: '( ˘ᵕ˘ )', label: 'Tranquilo', color: '#A8D4F0' };
-  recomendacion = '';
+  hobbies: string[] = [];
+recomendacion = '';
   avatarImg = localStorage.getItem('avatarImg') || '';
   tareas: TareaApi[] = [];
 
@@ -63,10 +67,40 @@ export class Principal implements OnInit, OnDestroy {
     return 'Buenas noches';
   }
 
-  ngOnInit() {
-    this.cargarDashboard();
-    this.cargarTareas();
+ngOnInit() {
+  this.cargarDashboard();
+  this.cargarTareas();
+  this.cargarHobbies();
+}
+
+cargarHobbies() {
+  this.hobbysApi.getHobbys().subscribe({
+    next: (h) => {
+      this.hobbies = h.map((hobby: any) => hobby.nombre_hobby);
+      this.generarRecomendacion();
+    },
+    error: () => {
+      // fallback a localStorage
+      this.hobbies = JSON.parse(localStorage.getItem('hobbies') || '[]');
+      this.generarRecomendacion();
+    }
+  });
+}
+
+generarRecomendacion() {
+  if (this.hobbies.length === 0) {
+    this.recomendacion = 'Tómate un descanso hoy, te lo mereces.';
+    return;
   }
+  const hobby = this.hobbies[Math.floor(Math.random() * this.hobbies.length)];
+  const mensajes = [
+    `No olvides hacer tu ${hobby} favorito hoy.`,
+    `Un momento de ${hobby} puede aliviar tu estrés.`,
+    `¿Ya dedicaste tiempo a ${hobby} hoy?`,
+    `Recuerda que ${hobby} te ayuda a recargar energía.`
+  ];
+  this.recomendacion = mensajes[Math.floor(Math.random() * mensajes.length)];
+}
 
   cargarDashboard() {
     this.cargando = true;
@@ -84,9 +118,13 @@ export class Principal implements OnInit, OnDestroy {
   }
 
   procesarDashboard(data: any) {
-    this.nombreUsuario = data.perfil?.apodo || data.perfil?.nombre || 'Usuario';
-    this.nivelEstresTotal = data.perfil?.puntosT_estres || 0;
+  this.nombreUsuario = data.perfil?.apodo || data.perfil?.nombre || 'Usuario';
+  this.nivelEstresTotal = data.perfil?.puntosT_estres || 0;
     this.recomendacion = data.recomendacion || 'Tómate un descanso hoy.';
+
+  if (data.recomendacion) {
+    this.recomendacion = data.recomendacion;
+  }
 
     // Nivel de estrés
     const pts = this.nivelEstresTotal;
@@ -117,6 +155,8 @@ export class Principal implements OnInit, OnDestroy {
     this.porcentajeProgreso = this.tareasTotal > 0
       ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
       : 0;
+
+      
   }
 
   cargarTareas() {
@@ -154,21 +194,21 @@ export class Principal implements OnInit, OnDestroy {
   abrirCuadrado() { this.mostrarCuadrado = true; }
   cerrarCuadrado() { this.mostrarCuadrado = false; }
 
-  agregarTareaRapida() {
-    if (!this.nuevaTarea.trim()) return;
-    this.tareasApi.crear({
-      nombre_tarea: this.nuevaTarea.trim(),
-      dificultad: 'baja',
-      prioridad: 'baja',
-    }).subscribe({
-      next: () => {
-        this.nuevaTarea = '';
-        this.mostrarCuadrado = false;
-        this.cargarTareas();
-        this.cargarDashboard();
-      }
-    });
-  }
+agregarTareaRapida() {
+  if (!this.nuevaTarea.trim()) return;
+  this.tareasApi.crear({
+    nombre_tarea: this.nuevaTarea.trim(),
+    dificultad: 1,
+    prioridad: 0,
+  }).subscribe({
+    next: () => {
+      this.nuevaTarea = '';
+      this.mostrarCuadrado = false;
+      this.cargarTareas();
+      this.cargarDashboard();
+    }
+  });
+}
 
   // LISTA TAREAS SIDEBAR
   mostrarLista = false;
@@ -210,20 +250,20 @@ export class Principal implements OnInit, OnDestroy {
       this.anioSeleccionado === today.getFullYear();
   }
 
-  tieneTareaEnDia(dia: number): boolean {
-    if (!this.mesSeleccionado) return false;
-    const fechaStr = `${this.anioSeleccionado}-${String(this.mesNumSeleccionado + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-    return this.tareas.some(t => t.fecha_entrega === fechaStr);
-  }
+tieneTareaEnDia(dia: number): boolean {
+  if (!this.mesSeleccionado) return false;
+  const fechaStr = `${this.anioSeleccionado}-${String(this.mesNumSeleccionado + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+  return this.tareas.some(t => t.fecha === fechaStr);
+}
 
-  tooltipTareasDia(dia: number): string {
-    if (!this.mesSeleccionado) return '';
-    const fechaStr = `${this.anioSeleccionado}-${String(this.mesNumSeleccionado + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
-    return this.tareas
-      .filter(t => t.fecha_entrega === fechaStr)
-      .map(t => t.nombre_tarea)
-      .join(', ');
-  }
+tooltipTareasDia(dia: number): string {
+  if (!this.mesSeleccionado) return '';
+  const fechaStr = `${this.anioSeleccionado}-${String(this.mesNumSeleccionado + 1).padStart(2,'0')}-${String(dia).padStart(2,'0')}`;
+  return this.tareas
+    .filter(t => t.fecha === fechaStr)
+    .map(t => t.nombre_tarea)
+    .join(', ');
+}
 
   // MICRODESCANSO
   mostrarTimer = false;

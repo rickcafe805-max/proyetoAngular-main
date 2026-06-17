@@ -110,37 +110,33 @@ export class Cuestionario4 implements OnDestroy {
     });
   }
 
-  private crearMaterias() {
-    const materiasTemp = JSON.parse(localStorage.getItem('materiasTemp') || '[]');
+private crearMaterias() {
+  const materiasTemp = JSON.parse(localStorage.getItem('materiasTemp') || '[]');
 
-    if (materiasTemp.length === 0) {
-      this.finalizar();
-      return;
-    }
-
-    let completadas = 0;
-
-    materiasTemp.forEach((m: any) => {
-      this.materiasApi.crearMateria({
-        nombre_materia: m.nombre,
-        maestro: m.docente,
-        id_color: m.color.id_color
-      }).subscribe({
-        next: () => {
-          completadas++;
-          if (completadas === materiasTemp.length) {
-            this.finalizar();
-          }
-        },
-        error: () => {
-          completadas++;
-          if (completadas === materiasTemp.length) {
-            this.finalizar();
-          }
-        }
-      });
-    });
+  if (materiasTemp.length === 0) {
+    this.finalizar();
+    return;
   }
+
+  let completadas = 0;
+  materiasTemp.forEach((m: any) => {
+    this.materiasApi.crearMateria({
+      nombre_materia: m.nombre,
+      maestro: m.docente,
+      materia_color: m.color.id_color  
+    }).subscribe({
+      next: () => {
+        completadas++;
+        if (completadas === materiasTemp.length) this.finalizar();
+      },
+      error: (err) => {
+        console.log('Error materia:', err.error);
+        completadas++;
+        if (completadas === materiasTemp.length) this.finalizar();
+      }
+    });
+  });
+}
 
   private finalizar() {
     localStorage.removeItem('materiasTemp');
@@ -149,5 +145,7 @@ export class Cuestionario4 implements OnDestroy {
     this.router.navigate(['/principal']);
   }
 
+
+  
   ngOnDestroy() {}
 }

@@ -34,11 +34,14 @@
 <p class="error-registro" *ngIf="error">{{ error }}</p>
 <p class="cargando-registro" *ngIf="cargando">Creando tu cuenta...</p>
 
-  <div class="botones-nav">
-    <button class="btn-nav" routerLink="/cuestionario3">Anterior</button>
-    <a routerLink="/principal" class="link-saltar">Saltar tutorial</a>
-    <button class="btn-nav btn-continuar" (click)="siguiente()">
-      {{ slideActual === slides.length - 1 ? '¡Comenzar!' : 'Continuar' }}
-    </button>
-  </div>
+<div class="botones-nav">
+  <button class="btn-nav" routerLink="/cuestionario3">Anterior</button>
+  <a class="link-saltar" (click)="registrar()">Saltar tutorial</a>
+  <button class="btn-nav btn-continuar" (click)="siguiente()">
+    {{ slideActual === slides.length - 1 ? '¡Comenzar!' : 'Continuar' }}
+  </button>
+</div>
+
+<p class="error-registro" *ngIf="error">{{ error }}</p>
+<p class="cargando-registro" *ngIf="cargando">Creando tu cuenta... ⏳</p>
 </div>
