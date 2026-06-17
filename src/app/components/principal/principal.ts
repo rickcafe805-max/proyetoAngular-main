@@ -208,11 +208,13 @@ agregarTareaRapida() {
   if (!this.nuevaTarea.trim()) return;
 
   if (this.materias.length === 0) {
-    alert('Necesitas tener al menos una materia registrada para agregar tareas.');
+    alert('Necesitas al menos una materia. Agrégala en "Registro de tareas".');
+    this.cerrarCuadrado();
     return;
   }
 
   const hoy = new Date().toISOString().split('T')[0];
+
   const dto = {
     nombre_tarea: this.nuevaTarea.trim(),
     dificultad: 1,
@@ -231,7 +233,6 @@ agregarTareaRapida() {
     error: (err) => console.log('Error tarea rápida:', err.error)
   });
 }
-
   // LISTA TAREAS SIDEBAR
   mostrarLista = false;
   abrirLista() { this.mostrarLista = true; }

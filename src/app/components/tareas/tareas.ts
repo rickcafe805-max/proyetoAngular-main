@@ -40,21 +40,16 @@ export class Tareas implements OnInit {
   nuevaMateriaColor = 1;
   errorMateria = '';
 
-  coloresDisponibles = [
-    { id_color: 1, hex: '#F4A0B5' },
-    { id_color: 2, hex: '#F9C5D1' },
-    { id_color: 3, hex: '#A8C8F0' },
-    { id_color: 4, hex: '#A0D4F5' },
-    { id_color: 5, hex: '#F5ECD7' },
-    { id_color: 6, hex: '#F9E4B7' },
-    { id_color: 7, hex: '#F4C5A0' },
-    { id_color: 8, hex: '#D4A0C8' },
-    { id_color: 9, hex: '#B0A0D4' },
-    { id_color: 10, hex: '#F0A0B8' },
-    { id_color: 11, hex: '#A8D4A8' },
-    { id_color: 12, hex: '#A0D4E8' },
-    { id_color: 13, hex: '#D45060' },
-  ];
+coloresDisponibles = [
+  { id_color: 1, hex: '#F4A0B5' },
+  { id_color: 2, hex: '#F9C5D1' },
+  { id_color: 3, hex: '#A8C8F0' },
+  { id_color: 4, hex: '#A0D4F5' },
+  { id_color: 5, hex: '#F5ECD7' },
+  { id_color: 6, hex: '#F9E4B7' },
+  { id_color: 7, hex: '#F4C5A0' },
+  { id_color: 8, hex: '#D4A0C8' },
+];
 
   ngOnInit() {
     this.cargarTareas();
