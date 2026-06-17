@@ -85,6 +85,7 @@ agregarTarea() {
   if (this.materiaId) dto.tarea_materia = this.materiaId;
 
   console.log('Enviando tarea:', dto);
+  console.log('DTO FINAL:', JSON.stringify(dto));
 
   this.tareasApi.crear(dto).subscribe({
     next: () => {

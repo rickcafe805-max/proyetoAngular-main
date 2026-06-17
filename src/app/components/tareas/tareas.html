@@ -96,12 +96,12 @@
         <div class="fila-dos">
           <div class="campo" *ngIf="materias.length > 0">
             <label>Materia</label>
-            <select [(ngModel)]="materiaId">
-              <option [value]="null">Sin materia</option>
-              <option *ngFor="let m of materias" [value]="m.id_materia">
-                {{ m.nombre_materia }}
-              </option>
-            </select>
+<select [(ngModel)]="materiaId">
+  <option [ngValue]="null">Sin materia</option>
+  <option *ngFor="let m of materias" [ngValue]="m.id_materia">
+    {{ m.nombre_materia }}
+  </option>
+</select>
           </div>
 
           <div class="campo">
