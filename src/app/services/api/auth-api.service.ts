@@ -25,9 +25,10 @@ export class AuthApiService {
 
   constructor(private http: HttpClient) {}
 
-  register(dto: RegisterDto) {
-    return this.http.post<{ token: string }>(`${this.base}/auth/register`, dto);
-  }
+register(dto: RegisterDto) {
+  console.log('Enviando registro:', dto); 
+  return this.http.post<{ token: string }>(`${this.base}/auth/register`, dto);
+}
 
   login(dto: LoginDto) {
     return this.http.post<{ token: string }>(`${this.base}/auth/login`, dto).pipe(

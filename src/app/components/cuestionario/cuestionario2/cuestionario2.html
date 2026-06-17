@@ -33,17 +33,17 @@
 
     <button class="btn-agregar" (click)="agregarMateria()">+ Agregar materia</button>
 
-    <div class="contenedor-materias" *ngIf="materias.length > 0">
-      <h2 class="materia-titulo">Tus Materias</h2>
-      <div class="materia-item" *ngFor="let m of materias; let i = index">
-        <div class="materia-color" [style.background-color]="m.color"></div>
-        <div class="materia-info">
-          <span class="materia-nombre">{{ m.nombre }}</span>
-          <span class="materia-docente">{{ m.docente }}</span>
-        </div>
-        <button class="btn-eliminar" (click)="eliminarMateria(i)">Eliminar</button>
-      </div>
+<div class="contenedor-materias" *ngIf="materias.length > 0">
+  <h2>Tus Materias</h2>
+  <div class="materia-item" *ngFor="let m of materias; let i = index">
+    <div class="materia-color" [style.background-color]="m.color.hex"></div>
+    <div class="materia-info">
+      <span class="materia-nombre">{{ m.nombre }}</span>
+      <span class="materia-docente">{{ m.docente }}</span>
     </div>
+    <button class="btn-eliminar" (click)="eliminarMateria(i)">🗑️</button>
+  </div>
+</div>
   </div>
 
   <div class="botones-nav">

@@ -77,30 +77,36 @@ export class Cuestionario4 implements OnDestroy {
     }
   }
 
-  registrar() {
-    this.cargando = true;
-    this.error = '';
+registrar() {
+  this.cargando = true;
+  this.error = '';
 
-    this.authApi.register({
-      nombre: this.estado.nombre,
-      username: this.estado.username,
-      correo: this.estado.correo,
-      password: this.estado.password,
-      edad: this.estado.edad,
-      carrera: this.estado.carrera,
-      semestre: this.estado.semestre,
-      apodo: this.estado.apodo || this.estado.nombre,
-    }).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.token);
-        this.crearMateriasYHobbies();
-      },
-      error: (err) => {
-        this.cargando = false;
-        this.error = err.error?.message || 'Error al registrarse. Intenta con otro correo.';
-      }
-    });
-  }
+  const body = {
+    nombre: this.estado.nombre,
+    username: this.estado.username,
+    correo: this.estado.correo,
+    password: this.estado.password,
+    edad: this.estado.edad || 18,
+    carrera: this.estado.carrera || 'No especificada',
+    semestre: this.estado.semestre || 1,
+    apodo: this.estado.apodo || this.estado.nombre,
+  };
+
+  console.log('Body del registro:', body); // ver en consola qué se envía
+
+  this.authApi.register(body).subscribe({
+    next: (res) => {
+      console.log('Registro exitoso:', res);
+      localStorage.setItem('token', res.token);
+      this.crearMateriasYHobbies();
+    },
+    error: (err) => {
+      console.log('Error registro:', err.error);
+      this.cargando = false;
+      this.error = JSON.stringify(err.error);
+    }
+  });
+}
 
   private crearMateriasYHobbies() {
     const materiasTemp = JSON.parse(localStorage.getItem('materiasTemp') || '[]');

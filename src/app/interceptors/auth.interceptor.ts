@@ -7,11 +7,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const token = localStorage.getItem('token');
 
-  // Solo agregar token si existe Y no es una ruta pública
   const rutasPublicas = ['/auth/register', '/auth/login'];
   const esPublica = rutasPublicas.some(r => req.url.includes(r));
 
-  const authReq = token && !esPublica
+  const authReq = token
     ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
     : req;
 
