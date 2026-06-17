@@ -60,15 +60,14 @@
     <span class="tarea-materia" *ngIf="t.materia">
       {{ t.materia.nombre_materia }}
     </span>
-    <span class="tarea-fecha" *ngIf="t.fecha_entrega">
-      📅 {{ t.fecha_entrega }}
+    <span class="tarea-fecha" *ngIf="t.fecha">
+      📅 {{ t.fecha }}
     </span>
-    <div class="tarea-tags">
-      <span class="tag">{{ t.dificultad }}</span>
-      <span class="tag">{{ t.prioridad }}</span>
-      <span class="tag" *ngIf="t.tipo">{{ t.tipo }}</span>
-      <span class="tag tag-pts">{{ t.puntos_estres }} pts</span>
-    </div>
+<div class="tarea-tags">
+  <span class="tag">{{ t.dificultad }}</span>
+  <span class="tag">{{ t.prioridad }}</span>
+  <span class="tag tag-pts">{{ t.puntos_estres }} pts</span>
+</div>
   </div>
   <div class="tarea-acciones">
     <button class="btn-completar" (click)="completarTarea(t.id_tarea)"
