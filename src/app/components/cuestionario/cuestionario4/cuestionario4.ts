@@ -77,59 +77,74 @@ export class Cuestionario4 implements OnDestroy {
     }
   }
 
-registrar() {
-  this.cargando = true;
-  this.error = '';
+  registrar() {
+    this.cargando = true;
+    this.error = '';
 
-  const body = {
-    nombre: this.estado.nombre,
-    username: this.estado.username,
-    correo: this.estado.correo,
-    password: this.estado.password,
-    edad: this.estado.edad || 18,
-    carrera: this.estado.carrera || 'No especificada',
-    semestre: this.estado.semestre || 1,
-    apodo: this.estado.apodo || this.estado.nombre,
-  };
+    const body = {
+      nombre: this.estado.nombre,
+      username: this.estado.username,
+      correo: this.estado.correo,
+      password: this.estado.password,
+      edad: this.estado.edad || 18,
+      carrera: this.estado.carrera || 'No especificada',
+      semestre: this.estado.semestre || '1er',
+      apodo: this.estado.apodo || this.estado.nombre,
+      hobbys: this.estado.hobbies || []
+    };
 
-  console.log('Body del registro:', body); // ver en consola qué se envía
+    console.log('Registrando:', body);
 
-  this.authApi.register(body).subscribe({
-    next: (res) => {
-      console.log('Registro exitoso:', res);
-      localStorage.setItem('token', res.token);
-      this.crearMateriasYHobbies();
-    },
-    error: (err) => {
-      console.log('Error registro:', err.error);
-      this.cargando = false;
-      this.error = JSON.stringify(err.error);
-    }
-  });
-}
+    this.authApi.register(body).subscribe({
+      next: (res) => {
+        console.log('Registro OK:', res);
+        localStorage.setItem('token', res.access_token);
+        localStorage.setItem('nombre', res.user.nombre);
+        this.crearMaterias();
+      },
+      error: (err) => {
+        console.log('Error:', err.error);
+        this.cargando = false;
+        this.error = err.error?.message || 'Error al registrarse.';
+      }
+    });
+  }
 
-  private crearMateriasYHobbies() {
+  private crearMaterias() {
     const materiasTemp = JSON.parse(localStorage.getItem('materiasTemp') || '[]');
-    const hobbies: string[] = this.estado.hobbies;
 
-    // Crear materias
-    const peticionesM = materiasTemp.map((m: any) =>
+    if (materiasTemp.length === 0) {
+      this.finalizar();
+      return;
+    }
+
+    let completadas = 0;
+
+    materiasTemp.forEach((m: any) => {
       this.materiasApi.crearMateria({
         nombre_materia: m.nombre,
         maestro: m.docente,
         id_color: m.color.id_color
-      }).subscribe()
-    );
+      }).subscribe({
+        next: () => {
+          completadas++;
+          if (completadas === materiasTemp.length) {
+            this.finalizar();
+          }
+        },
+        error: () => {
+          completadas++;
+          if (completadas === materiasTemp.length) {
+            this.finalizar();
+          }
+        }
+      });
+    });
+  }
 
-    // Crear hobbies
-    hobbies.forEach(h =>
-      this.hobbysApi.agregar(h).subscribe()
-    );
-
-    // Limpiar temp
+  private finalizar() {
     localStorage.removeItem('materiasTemp');
     this.estado.limpiar();
-
     this.cargando = false;
     this.router.navigate(['/principal']);
   }

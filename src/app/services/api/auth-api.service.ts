@@ -10,13 +10,26 @@ export interface RegisterDto {
   password: string;
   edad: number;
   carrera: string;
-  semestre: number;
-  apodo?: string;
+  semestre: string;
+  apodo: string;
+  hobbys: string[];
 }
 
 export interface LoginDto {
   username: string;
   password: string;
+}
+
+export interface AuthResponse {
+  message: string;
+  access_token: string;
+  user: {
+    id_usuario: number;
+    username: string;
+    nombre: string;
+    correo: string;
+    role: string;
+  };
 }
 
 @Injectable({ providedIn: 'root' })
@@ -25,19 +38,24 @@ export class AuthApiService {
 
   constructor(private http: HttpClient) {}
 
-register(dto: RegisterDto) {
-  console.log('Enviando registro:', dto); 
-  return this.http.post<{ token: string }>(`${this.base}/auth/register`, dto);
-}
+  register(dto: RegisterDto) {
+    return this.http.post<AuthResponse>(`${this.base}/auth/register`, dto);
+  }
 
   login(dto: LoginDto) {
-    return this.http.post<{ token: string }>(`${this.base}/auth/login`, dto).pipe(
-      tap(res => localStorage.setItem('token', res.token))
+    return this.http.post<AuthResponse>(`${this.base}/auth/login`, dto).pipe(
+      tap(res => {
+        localStorage.setItem('token', res.access_token);
+        localStorage.setItem('username', res.user.username);
+        localStorage.setItem('nombre', res.user.nombre);
+      })
     );
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('nombre');
   }
 
   isLoggedIn(): boolean {

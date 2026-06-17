@@ -15,17 +15,23 @@
             </div>
         </div>
 
-        <div class="grupo-formulario">
-            <label>Nivel académico</label>
-            <div class="recuadro-input">
-                <select [(ngModel)]="nivelesAcademicos">
-                    <option value="">Selecciona...</option>
-                    <option>Preparatoria</option>
-                    <option>Universidad</option>
-                    <option>Posgrado</option>
-                </select>
-            </div>
-        </div>
+<div class="grupo-formulario">
+  <label>Nivel académico</label>
+  <div class="recuadro-input">
+    <select [(ngModel)]="semestre">
+      <option value="">Selecciona...</option>
+      <option value="1er">1er semestre</option>
+      <option value="2do">2do semestre</option>
+      <option value="3er">3er semestre</option>
+      <option value="4to">4to semestre</option>
+      <option value="5to">5to semestre</option>
+      <option value="6to">6to semestre</option>
+      <option value="7mo">7mo semestre</option>
+      <option value="8vo">8vo semestre</option>
+      <option value="Posgrado">Posgrado</option>
+    </select>
+  </div>
+</div>
 
         <div class="grupo-formulario">
             <label>¿Cuáles son tus hobbies?</label>

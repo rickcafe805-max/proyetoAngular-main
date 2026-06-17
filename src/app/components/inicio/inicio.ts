@@ -21,27 +21,30 @@ export class Inicio {
     private authApi: AuthApiService,
     private router: Router
   ) {}
-
-  iniciarSesion() {
-    if (!this.username || !this.password) {
-      this.error = 'Por favor completa todos los campos.';
-      return;
-    }
-    this.cargando = true;
-    this.error = '';
-
-    this.authApi.login({
-      username: this.username,
-      password: this.password
-    }).subscribe({
-      next: () => {
-        this.cargando = false;
-        this.router.navigate(['/principal']);
-      },
-      error: (err) => {
-        this.cargando = false;
-        this.error = err.error?.message || 'Usuario o contraseña incorrectos.';
-      }
-    });
+nombreUsuario = localStorage.getItem('nombre') || 'Usuario';
+iniciarSesion() {
+  
+  if (!this.username || !this.password) {
+    this.error = 'Por favor completa todos los campos.';
+    return;
   }
+  this.cargando = true;
+  this.error = '';
+
+  this.authApi.login({
+    username: this.username,
+    password: this.password
+  }).subscribe({
+    next: () => {
+      this.cargando = false;
+      this.router.navigate(['/principal']);
+    },
+    error: (err) => {
+      this.cargando = false;
+      this.error = err.error?.message || 'Usuario o contraseña incorrectos.';
+    }
+  });
+  
+}
+
 }

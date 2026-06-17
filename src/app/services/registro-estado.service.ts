@@ -8,10 +8,9 @@ export class RegistroEstadoService {
   password = '';
   edad = 0;
   carrera = '';
-  semestre = 0;
+  semestre = '';
   apodo = '';
   hobbies: string[] = [];
-  colorAcompanante = 1;
 
   limpiar() {
     this.nombre = '';
@@ -20,9 +19,8 @@ export class RegistroEstadoService {
     this.password = '';
     this.edad = 0;
     this.carrera = '';
-    this.semestre = 0;
+    this.semestre = '';
     this.apodo = '';
     this.hobbies = [];
-    this.colorAcompanante = 1;
   }
 }

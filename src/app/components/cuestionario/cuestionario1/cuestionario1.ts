@@ -59,12 +59,12 @@ export class Cuestionario1 {
     return `${(this.estadoAnimo / 5) * 100}%`;
   }
 
-  continuar() {
-    this.estado.edad = parseInt(this.edad) || 0;
-    this.estado.carrera = this.carrera;
-    this.estado.semestre = parseInt(this.semestre) || 1;
-    this.estado.hobbies = this.hobbiesSeleccionados;
-    localStorage.setItem('hobbies', JSON.stringify(this.hobbiesSeleccionados));
-    this.router.navigate(['/cuestionario2']);
-  }
+continuar() {
+  this.estado.edad = parseInt(this.edad) || 18;
+  this.estado.carrera = this.carrera || 'No especificada';
+  this.estado.semestre = this.semestre || '1er';
+  this.estado.hobbies = this.hobbiesSeleccionados;
+  localStorage.setItem('hobbies', JSON.stringify(this.hobbiesSeleccionados));
+  this.router.navigate(['/cuestionario2']);
+}
 }
