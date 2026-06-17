@@ -131,11 +131,15 @@ coloresDisponibles = [
     }
     this.errorMateria = '';
 
-    this.materiasApi.crearMateria({
+    const dto = {
       nombre_materia: this.nuevaMateriaNombre,
       maestro: this.nuevaMateriaDocente,
       materia_color: this.nuevaMateriaColor
-    }).subscribe({
+    };
+
+    console.log('DTO MATERIA:', JSON.stringify(dto));
+
+    this.materiasApi.crearMateria(dto).subscribe({
       next: () => {
         this.nuevaMateriaNombre = '';
         this.nuevaMateriaDocente = '';
@@ -144,7 +148,9 @@ coloresDisponibles = [
         this.cargarMaterias();
       },
       error: (err) => {
-        this.errorMateria = err.error?.message || 'Error al guardar materia.';
+        console.log('ERROR COMPLETO MATERIA:', err);
+        console.log('ERROR BODY MATERIA:', err.error);
+        this.errorMateria = err.error?.message || err.error?.detail || 'Error al guardar materia.';
       }
     });
   }
