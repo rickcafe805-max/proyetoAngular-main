@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { catchError } from 'rxjs/operators';
 
 export interface MateriaDto {
   nombre_materia: string;
@@ -18,10 +19,15 @@ export class MateriasApiService {
     return this.http.get<any[]>(`${this.base}/cmaterias`);
   }
 
-  crearMateria(dto: MateriaDto) {
-    console.log('Creando materia:', dto);
-    return this.http.post<any>(`${this.base}/cmaterias`, dto);
-  }
+crearMateria(dto: MateriaDto) {
+  console.log('Enviando a API:', JSON.stringify(dto));
+  return this.http.post<any>(`${this.base}/cmaterias`, dto).pipe(
+    catchError(err => {
+      console.log('Error completo:', JSON.stringify(err.error));
+      throw err;
+    })
+  );
+}
 
   getMateria(id: number) {
     return this.http.get<any>(`${this.base}/cmaterias/${id}`);

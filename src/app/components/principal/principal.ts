@@ -80,9 +80,32 @@ ngOnInit() {
 }
 
 cerrarSesion() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('nombre');
-  localStorage.removeItem('username');
+  const keysToRemove = [
+    'token',
+    'nombre',
+    'username',
+    'avatarImg',
+    'modoOscuro',
+    'materiasTemp',
+    'hobbies'
+  ];
+
+  keysToRemove.forEach(key => localStorage.removeItem(key));
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('journal_')) {
+      localStorage.removeItem(key);
+    }
+  }
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('journal_indice_')) {
+      localStorage.removeItem(key);
+    }
+  }
+
   this.router.navigate(['/presentacion']);
 }
 
