@@ -370,3 +370,70 @@
 .tag-pts {
   background-color: #F4C0D0 !important;
 }
+
+.header-botones {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-secundario {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  border: 2px solid #F9DFA0;
+  border-radius: 30px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+
+.btn-secundario:hover {
+  background-color: #F9DFA0;
+}
+
+.sin-materias {
+  font-size: 0.78rem;
+  color: #e74c3c;
+  margin-top: 4px;
+}
+
+.sin-materias a {
+  color: #F5C842;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.colores-fila {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.circulo-color {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.circulo-color:hover { transform: scale(1.15); }
+.circulo-color.seleccionado {
+  border-color: #1A1A1A;
+  transform: scale(1.15);
+}
+
+.modal-materia {
+  max-width: 400px;
+}
+
+.error-materia {
+  color: #e74c3c;
+  font-size: 0.85rem;
+}
+
+.requerido {
+  color: #e74c3c;
+}

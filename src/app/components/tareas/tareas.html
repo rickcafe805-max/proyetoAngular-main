@@ -46,10 +46,17 @@
 
   <!-- CONTENIDO -->
   <div class="contenido">
-    <div class="contenido-header">
-      <h1>Registro de tareas</h1>
-      <button class="btn-nueva" (click)="mostrarForm = true">+ Nueva tarea</button>
-    </div>
+<div class="contenido-header">
+  <h1>Registro de tareas</h1>
+  <div class="header-botones">
+    <button class="btn-secundario" (click)="mostrarAgregarMateria = true">
+      + Agregar materia
+    </button>
+    <button class="btn-nueva" (click)="mostrarForm = true">
+      + Nueva tarea
+    </button>
+  </div>
+</div>
 
     <!-- Lista de tareas -->
     <div class="tarea-card" *ngFor="let t of tareas">
@@ -82,74 +89,112 @@
       No hay tareas registradas aún.
     </p>
 
-    <!-- MODAL NUEVA TAREA -->
-    <div class="modal-overlay" *ngIf="mostrarForm" (click)="mostrarForm = false">
-      <div class="modal" (click)="$event.stopPropagation()">
-        <button class="btn-cerrar-modal" (click)="mostrarForm = false">✖</button>
-        <h2>Nueva tarea</h2>
+<!-- MODAL NUEVA TAREA -->
+<div class="modal-overlay" *ngIf="mostrarForm" (click)="mostrarForm = false">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <button class="btn-cerrar-modal" (click)="mostrarForm = false">✖</button>
+    <h2>Nueva tarea</h2>
 
-        <div class="campo">
-          <label>Nombre de la tarea</label>
-          <input type="text" [(ngModel)]="nombre" placeholder="tarea">
-        </div>
+    <div class="campo">
+      <label>Nombre de la tarea</label>
+      <input type="text" [(ngModel)]="nombre" placeholder="tarea">
+    </div>
 
-        <div class="fila-dos">
-          <div class="campo" *ngIf="materias.length > 0">
-            <label>Materia</label>
-<select [(ngModel)]="materiaId">
-  <option [ngValue]="null">Sin materia</option>
-  <option *ngFor="let m of materias" [ngValue]="m.id_materia">
-    {{ m.nombre_materia }}
-  </option>
-</select>
-          </div>
+    <div class="fila-dos">
+      <div class="campo">
+        <label>Materia <span class="requerido">*</span></label>
+        <select [(ngModel)]="materiaId">
+          <option [ngValue]="null" disabled>Selecciona una materia</option>
+          <option *ngFor="let m of materias" [ngValue]="m.id_materia">
+            {{ m.nombre_materia }}
+          </option>
+        </select>
+        <small class="sin-materias" *ngIf="materias.length === 0">
+          ⚠️ No tienes materias. <a (click)="mostrarForm = false; mostrarAgregarMateria = true">Agregar materia</a>
+        </small>
+      </div>
 
-          <div class="campo">
-            <label>Fecha de entrega *</label>
-            <input type="date" [(ngModel)]="fecha" required>
-          </div>
-
-          <div class="campo">
-            <label>Dificultad</label>
-            <div class="opciones-btn">
-              <button [class.activo]="dificultad === 'Baja'" (click)="dificultad = 'Baja'">Baja</button>
-              <button [class.activo]="dificultad === 'Media'" (click)="dificultad = 'Media'">Media</button>
-              <button [class.activo]="dificultad === 'Alta'" (click)="dificultad = 'Alta'">Alta</button>
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>Prioridad</label>
-            <div class="opciones-btn">
-              <button [class.activo]="prioridad === 'Baja'" (click)="prioridad = 'Baja'">Baja</button>
-              <button [class.activo]="prioridad === 'Media'" (click)="prioridad = 'Media'">Media</button>
-              <button [class.activo]="prioridad === 'Alta'" (click)="prioridad = 'Alta'">Alta</button>
-            </div>
-          </div>
-
-          <div class="campo">
-            <label>Tipo de tarea</label>
-            <div class="opciones-btn">
-              <button [class.activo]="tipo === 'Individual'" (click)="tipo = 'Individual'">Individual</button>
-              <button [class.activo]="tipo === 'En equipo'" (click)="tipo = 'En equipo'">En equipo</button>
-            </div>
-          </div>
-
-          <div class="estres-box" *ngIf="dificultad && prioridad">
-            <span>CUIDADO</span>
-            <div>
-              <p><strong>Estrés generado</strong></p>
-              <p>{{ estresGenerado }} puntos</p>
-            </div>
-          </div>
-
-
-
-          <div class="modal-botones">
-            <button class="btn-agregar" (click)="agregarTarea()">Agregar Tarea</button>
-            <button class="btn-cancelar" (click)="mostrarForm = false">Cancelar</button>
-          </div>
-        </div>
+      <div class="campo">
+        <label>Fecha de entrega *</label>
+        <input type="date" [(ngModel)]="fecha">
       </div>
     </div>
+
+    <div class="campo">
+      <label>Dificultad</label>
+      <div class="opciones-btn">
+        <button [class.activo]="dificultad === 'Baja'" (click)="dificultad = 'Baja'">Baja</button>
+        <button [class.activo]="dificultad === 'Media'" (click)="dificultad = 'Media'">Media</button>
+        <button [class.activo]="dificultad === 'Alta'" (click)="dificultad = 'Alta'">Alta</button>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Prioridad</label>
+      <div class="opciones-btn">
+        <button [class.activo]="prioridad === 'Baja'" (click)="prioridad = 'Baja'">Baja</button>
+        <button [class.activo]="prioridad === 'Media'" (click)="prioridad = 'Media'">Media</button>
+        <button [class.activo]="prioridad === 'Alta'" (click)="prioridad = 'Alta'">Alta</button>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label>Tipo de tarea</label>
+      <div class="opciones-btn">
+        <button [class.activo]="tipo === 'Individual'" (click)="tipo = 'Individual'">Individual</button>
+        <button [class.activo]="tipo === 'En equipo'" (click)="tipo = 'En equipo'">En equipo</button>
+      </div>
+    </div>
+
+    <div class="estres-box" *ngIf="dificultad && prioridad">
+      <span>⚠️</span>
+      <div>
+        <p><strong>Estrés generado</strong></p>
+        <p>{{ estresGenerado }} puntos</p>
+      </div>
+    </div>
+
+    <div class="modal-botones">
+      <button class="btn-agregar" (click)="agregarTarea()">Agregar Tarea</button>
+      <button class="btn-cancelar" (click)="mostrarForm = false">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AGREGAR MATERIA -->
+<div class="modal-overlay" *ngIf="mostrarAgregarMateria" (click)="mostrarAgregarMateria = false">
+  <div class="modal modal-materia" (click)="$event.stopPropagation()">
+    <button class="btn-cerrar-modal" (click)="mostrarAgregarMateria = false">✖</button>
+    <h2>Agregar materia</h2>
+
+    <div class="campo">
+      <label>Nombre de la materia</label>
+      <input type="text" [(ngModel)]="nuevaMateriaNombre" placeholder="Ej. Cálculo Diferencial">
+    </div>
+
+    <div class="campo">
+      <label>Docente</label>
+      <input type="text" [(ngModel)]="nuevaMateriaDocente" placeholder="Ej. Dr. Martínez">
+    </div>
+
+    <div class="campo">
+      <label>Color</label>
+      <div class="colores-fila">
+        <button *ngFor="let color of coloresDisponibles"
+          class="circulo-color"
+          [style.background-color]="color.hex"
+          [class.seleccionado]="nuevaMateriaColor === color.id_color"
+          (click)="nuevaMateriaColor = color.id_color">
+        </button>
+      </div>
+    </div>
+
+    <p class="error-materia" *ngIf="errorMateria">{{ errorMateria }}</p>
+
+    <div class="modal-botones">
+      <button class="btn-agregar" (click)="guardarMateria()">Guardar materia</button>
+      <button class="btn-cancelar" (click)="mostrarAgregarMateria = false">Cancelar</button>
+    </div>
+  </div>
+</div>
   </div>
