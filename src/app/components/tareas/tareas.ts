@@ -44,12 +44,18 @@ export class Tareas implements OnInit {
     });
   }
 
-  cargarMaterias() {
-    this.materiasApi.getMaterias().subscribe({
-      next: (m) => this.materias = m,
-      error: () => {}
-    });
-  }
+cargarMaterias() {
+  this.materiasApi.getMaterias().subscribe({
+    next: (m) => {
+      this.materias = m;
+      console.log('Materias cargadas:', m);
+    },
+    error: (err) => {
+      console.log('Error materias:', err.error);
+      this.materias = [];
+    }
+  });
+}
 
   get estresGenerado(): number {
     const d = this.dificultad === 'Alta' ? 3 : this.dificultad === 'Media' ? 2 : 1;
@@ -61,19 +67,22 @@ agregarTarea() {
   if (!this.nombre || !this.dificultad || !this.prioridad) return;
   this.cargando = true;
 
-  // Convertir string a número
   const dificultadNum = this.dificultad === 'Alta' ? 3 :
                         this.dificultad === 'Media' ? 2 : 1;
   const prioridadNum = this.prioridad === 'Alta' ? 2 :
                        this.prioridad === 'Media' ? 1 : 0;
 
-  const dto: TareaDto = {
+  // Solo incluir tarea_materia si hay una seleccionada
+  const dto: any = {
     nombre_tarea: this.nombre,
     dificultad: dificultadNum,
     prioridad: prioridadNum,
-    fecha: this.fecha || undefined,
-    tarea_materia: this.materiaId || undefined,
   };
+
+  if (this.fecha) dto.fecha = this.fecha;
+  if (this.materiaId) dto.tarea_materia = this.materiaId;
+
+  console.log('Enviando tarea:', dto);
 
   this.tareasApi.crear(dto).subscribe({
     next: () => {
@@ -82,7 +91,6 @@ agregarTarea() {
       this.fecha = '';
       this.dificultad = '';
       this.prioridad = '';
-      this.tipo = '';
       this.mostrarForm = false;
       this.cargando = false;
       this.cargarTareas();

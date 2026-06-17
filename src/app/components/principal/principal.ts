@@ -196,17 +196,19 @@ generarRecomendacion() {
 
 agregarTareaRapida() {
   if (!this.nuevaTarea.trim()) return;
-  this.tareasApi.crear({
+  const dto: any = {
     nombre_tarea: this.nuevaTarea.trim(),
     dificultad: 1,
     prioridad: 0,
-  }).subscribe({
+  };
+  this.tareasApi.crear(dto).subscribe({
     next: () => {
       this.nuevaTarea = '';
       this.mostrarCuadrado = false;
       this.cargarTareas();
       this.cargarDashboard();
-    }
+    },
+    error: (err) => console.log('Error tarea rápida:', err.error)
   });
 }
 
