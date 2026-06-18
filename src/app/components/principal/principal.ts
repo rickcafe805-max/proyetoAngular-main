@@ -48,9 +48,10 @@ export class Principal implements OnInit, OnDestroy {
   porcentajeProgreso = 0;
   estadoActual = { icono: '( ˘ᵕ˘ )', label: 'Tranquilo', color: '#A8D4F0' };
   hobbies: string[] = [];
-recomendacion = '';
+  recomendacion = '';
   avatarImg = localStorage.getItem('avatarImg') || '';
   tareas: TareaApi[] = [];
+  private _nivelEstresLocal = 0;
 
   get gaugeColor(): string {
     const label = this.nivelEstresLabel;
@@ -72,12 +73,12 @@ recomendacion = '';
     return 'Buenas noches';
   }
 
-ngOnInit() {
-  this.cargarDashboard();
-  this.cargarTareas();
-  this.cargarHobbies();
-  this.cargarMaterias();
-}
+  ngOnInit() {
+    this.cargarDashboard();
+    this.cargarTareas();
+    this.cargarHobbies();
+    this.cargarMaterias();
+  }
 
 cerrarSesion() {
   const keysToRemove = [
@@ -206,52 +207,70 @@ generarRecomendacion() {
     this.tareasApi.getAll().subscribe({
       next: (t) => {
         this.tareas = t;
+        this.recalcularTodo();
         this.cdr.detectChanges();
       },
       error: () => {}
     });
   }
 
-completarTarea(id: number) {
-  const tarea = this.tareas.find(t => t.id_tarea === id);
-  if (!tarea) return;
+  recalcularTodo() {
+    this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
+    this.tareasTotal = this.tareas.length;
+    this.porcentajeProgreso = this.tareasTotal > 0
+      ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
+      : 0;
 
-  // Toggle local inmediato
-  tarea.finalizada = !tarea.finalizada;
-  this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
-  this.tareasTotal = this.tareas.length;
-  this.porcentajeProgreso = this.tareasTotal > 0
-    ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
-    : 0;
+    this.nivelEstresTotal = this.tareas
+      .filter(t => !t.finalizada)
+      .reduce((acc, t) => acc + (t.puntos_estres || 0), 0);
 
-  const puntos = tarea.puntos_estres || 0;
-  if (tarea.finalizada) {
-    this.nivelEstresTotal = Math.max(0, this.nivelEstresTotal - puntos);
-  } else {
-    this.nivelEstresTotal = this.nivelEstresTotal + puntos;
-  }
-  this.porcentajeEstres = Math.min((this.nivelEstresTotal / 50) * 100, 100);
-  this.cdr.detectChanges();
+    this.porcentajeEstres = Math.min((this.nivelEstresTotal / 50) * 100, 100);
 
-  // Llamar API
-  this.tareasApi.completar(id).subscribe({
-    error: () => {
-      // Revertir si falla
-      tarea.finalizada = !tarea.finalizada;
-      this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
-      this.porcentajeProgreso = this.tareasTotal > 0
-        ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
-        : 0;
-      this.cdr.detectChanges();
+    const pts = this.nivelEstresTotal;
+    if (pts === 0) {
+      this.nivelEstresLabel = 'Sin estrés';
+      this.estadoActual = { icono: '( ˘ᵕ˘ )', label: 'Tranquilo', color: '#A8D4F0' };
+    } else if (pts <= 5) {
+      this.nivelEstresLabel = 'Bajo';
+      this.estadoActual = { icono: '( •ᴗ• )', label: 'Bien', color: '#A8D4C0' };
+    } else if (pts <= 10) {
+      this.nivelEstresLabel = 'Medio';
+      this.estadoActual = { icono: '( -_- )', label: 'Moderado', color: '#F9DFA0' };
+    } else if (pts <= 20) {
+      this.nivelEstresLabel = 'Alto';
+      this.estadoActual = { icono: '( >_< )', label: 'Estresado', color: '#F4C0A0' };
+    } else {
+      this.nivelEstresLabel = 'Extremo';
+      this.estadoActual = { icono: '( T_T )', label: 'Agobiado', color: '#F4A0A0' };
     }
-  });
-}
+  }
+
+  completarTarea(id: number) {
+    const tarea = this.tareas.find(t => t.id_tarea === id);
+    if (!tarea) return;
+
+    tarea.finalizada = !tarea.finalizada;
+    this.recalcularTodo();
+    this.cdr.detectChanges();
+
+    this.tareasApi.completar(id).subscribe({
+      error: () => {
+        tarea.finalizada = !tarea.finalizada;
+        this.recalcularTodo();
+        this.cdr.detectChanges();
+      }
+    });
+  }
 
   eliminarTarea(id: number) {
+    this.tareas = this.tareas.filter(t => t.id_tarea !== id);
+    this.recalcularTodo();
+    this.cdr.detectChanges();
+
     this.tareasApi.eliminar(id).subscribe({
-      next: () => {
+      error: () => {
         this.cargarTareas();
-        this.cargarDashboard();
       }
     });
   }
@@ -263,35 +282,35 @@ completarTarea(id: number) {
   abrirCuadrado() { this.mostrarCuadrado = true; }
   cerrarCuadrado() { this.mostrarCuadrado = false; }
 
-agregarTareaRapida() {
-  if (!this.nuevaTarea.trim()) return;
+  agregarTareaRapida() {
+    if (!this.nuevaTarea.trim()) return;
 
-  if (this.materias.length === 0) {
-    alert('Necesitas al menos una materia. Agrégala en "Registro de tareas".');
-    this.cerrarCuadrado();
-    return;
+    if (this.materias.length === 0) {
+      alert('Necesitas al menos una materia. Agrégala en "Registro de tareas".');
+      this.cerrarCuadrado();
+      return;
+    }
+
+    const hoy = new Date().toISOString().split('T')[0];
+    const dto = {
+      nombre_tarea: this.nuevaTarea.trim(),
+      dificultad: 1,
+      prioridad: 1,
+      fecha: hoy,
+      tarea_materia: this.materias[0].id_materia
+    };
+
+    this.tareasApi.crear(dto).subscribe({
+      next: (nuevaTarea) => {
+        this.tareas.push(nuevaTarea);
+        this.recalcularTodo();
+        this.nuevaTarea = '';
+        this.mostrarCuadrado = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.log('Error tarea rápida:', err.error)
+    });
   }
-
-  const hoy = new Date().toISOString().split('T')[0];
-
-  const dto = {
-    nombre_tarea: this.nuevaTarea.trim(),
-    dificultad: 1,
-    prioridad: 1,
-    fecha: hoy,
-    tarea_materia: this.materias[0].id_materia
-  };
-
-  this.tareasApi.crear(dto).subscribe({
-    next: () => {
-      this.nuevaTarea = '';
-      this.mostrarCuadrado = false;
-      this.cargarTareas();
-      this.cargarDashboard();
-    },
-    error: (err) => console.log('Error tarea rápida:', err.error)
-  });
-}
   // LISTA TAREAS SIDEBAR
   mostrarLista = false;
   abrirLista() { this.mostrarLista = true; }

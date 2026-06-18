@@ -26,7 +26,7 @@ export class CalendarioPage implements OnInit {
     'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'
   ];
 
-  diasSemana = ['L','M','X','J','V','S','D'];
+  diasSemana = ['L','MAR','MIÉ','J','V','S','D'];
 
   ngOnInit() {
     this.tareasApi.getAll().subscribe({

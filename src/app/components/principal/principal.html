@@ -61,19 +61,22 @@
           <!-- NIVEL DE ESTRÉS -->
           <div class="tarjeta amarilla">
             <p class="tarjeta-titulo">Nivel de estrés</p>
-            <div class="gauge-container">
-              <svg viewBox="0 0 120 70" class="gauge-svg">
-                <path d="M10,60 A50,50 0 0,1 110,60" fill="none" stroke="#e0d0a0" stroke-width="12"
-                  stroke-linecap="round" />
-                <path d="M10,60 A50,50 0 0,1 110,60" fill="none" [attr.stroke]="gaugeColor" stroke-width="12"
-                  stroke-linecap="round" stroke-dasharray="157" [attr.stroke-dashoffset]="gaugeOffset" />
-              </svg>
-              <div class="gauge-valor">
-                <span class="gauge-pts">{{ nivelEstresTotal }} pts</span>
-                <span class="gauge-label" [style.color]="gaugeColor">
-                  {{ nivelEstresLabel }}
-                </span>
-              </div>
+            <svg viewBox="0 0 120 70" class="gauge-svg">
+              <path d="M10,60 A50,50 0 0,1 110,60"
+                fill="none" stroke="#e0d0a0"
+                stroke-width="12" stroke-linecap="round"/>
+              <path d="M10,60 A50,50 0 0,1 110,60"
+                fill="none"
+                [attr.stroke]="gaugeColor"
+                stroke-width="12" stroke-linecap="round"
+                stroke-dasharray="157"
+                [attr.stroke-dashoffset]="gaugeOffset"/>
+            </svg>
+            <div class="gauge-valor">
+              <span class="gauge-pts">{{ nivelEstresTotal }} pts</span>
+              <span class="gauge-label" [style.color]="gaugeColor">
+                {{ nivelEstresLabel }}
+              </span>
             </div>
           </div>
 

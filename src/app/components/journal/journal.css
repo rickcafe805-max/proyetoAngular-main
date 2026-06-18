@@ -762,35 +762,27 @@
 /* ── DARK MODE JOURNAL ── */
 body.dark-mode .tabs-header {
   background-color: #111 !important;
-  border-color: #333 !important;
-}
-
-body.dark-mode .tab-btn {
-  background-color: #222 !important;
-  color: #aaa !important;
-}
-
-body.dark-mode .tabs-header {
-  background-color: #0d0d0d !important;
   border-bottom-color: #333 !important;
 }
 
 body.dark-mode .tab-btn {
-  background-color: #1a1a1a !important;
-  color: #c9c9c9 !important;
+  background-color: #1f1f1f !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #2f2f2f !important;
 }
 
 body.dark-mode .tab-btn img {
-  filter: brightness(0.85) !important;
+  filter: brightness(0.9) !important;
 }
 
 body.dark-mode .tab-btn.activo {
-  background-color: #2a2506 !important;
+  background-color: #2f2910 !important;
   color: #F5C842 !important;
+  border-color: #F5C842 !important;
 }
 
 body.dark-mode .tab-btn.activo img {
-  filter: brightness(1) sepia(0.6) saturate(2) hue-rotate(15deg) !important;
+  filter: brightness(1) sepia(0.6) saturate(2) hue-rotate(12deg) !important;
 }
 
 body.dark-mode .col-journal {
