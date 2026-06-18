@@ -1051,3 +1051,23 @@ body.dark-mode .entrada-tareas-titulo {
 body.dark-mode .vista-historial {
   background-color: #0d0d0d !important;
 }
+
+body.dark-mode .tabs-header {
+  background-color: #111 !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .tabs-header {
+  background-color: #0d0d0d !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .entrada-card {
+  background-color: #1a1a1a !important;
+  box-shadow: none !important;
+  border-color: #F4A0B5 !important;
+}
+
+body.dark-mode .estres-btn {
+  color: #f0f0f0 !important;
+}

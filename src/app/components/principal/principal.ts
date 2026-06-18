@@ -213,30 +213,31 @@ generarRecomendacion() {
   }
 
 completarTarea(id: number) {
-  // Evitar doble click
   const tarea = this.tareas.find(t => t.id_tarea === id);
-  if (!tarea || tarea.finalizada) return;
+  if (!tarea) return;
 
-  // Actualizar inmediatamente en UI
-  tarea.finalizada = true;
+  // Toggle local inmediato
+  tarea.finalizada = !tarea.finalizada;
   this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
   this.tareasTotal = this.tareas.length;
   this.porcentajeProgreso = this.tareasTotal > 0
     ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
     : 0;
 
-  // Actualizar estrés localmente
   const puntos = tarea.puntos_estres || 0;
-  this.nivelEstresTotal = Math.max(0, this.nivelEstresTotal - puntos);
+  if (tarea.finalizada) {
+    this.nivelEstresTotal = Math.max(0, this.nivelEstresTotal - puntos);
+  } else {
+    this.nivelEstresTotal = this.nivelEstresTotal + puntos;
+  }
   this.porcentajeEstres = Math.min((this.nivelEstresTotal / 50) * 100, 100);
-
   this.cdr.detectChanges();
 
-  // Llamar API en background sin revertir UI
+  // Llamar API
   this.tareasApi.completar(id).subscribe({
     error: () => {
-      // Si falla, revertir
-      tarea.finalizada = false;
+      // Revertir si falla
+      tarea.finalizada = !tarea.finalizada;
       this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
       this.porcentajeProgreso = this.tareasTotal > 0
         ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)

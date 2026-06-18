@@ -51,8 +51,8 @@
       <div class="col-principal">
 
         <div class="saludo-area">
-<!-- SALUDO -->
-<h1 class="saludo">{{ saludo }}, {{ nombreUsuario }}</h1>
+          <!-- SALUDO -->
+          <h1 class="saludo">{{ saludo }}, {{ nombreUsuario }}</h1>
           <p class="sub-saludo">PEQUEÑO REPORTE DE LAS ESTADÍSTICAS</p>
         </div>
 
@@ -68,12 +68,12 @@
                 <path d="M10,60 A50,50 0 0,1 110,60" fill="none" [attr.stroke]="gaugeColor" stroke-width="12"
                   stroke-linecap="round" stroke-dasharray="157" [attr.stroke-dashoffset]="gaugeOffset" />
               </svg>
-<div class="gauge-valor">
-  <span class="gauge-pts">{{ nivelEstresTotal }} pts</span>
-  <span class="gauge-label" [style.color]="gaugeColor">
-    {{ nivelEstresLabel }}
-  </span>
-</div>
+              <div class="gauge-valor">
+                <span class="gauge-pts">{{ nivelEstresTotal }} pts</span>
+                <span class="gauge-label" [style.color]="gaugeColor">
+                  {{ nivelEstresLabel }}
+                </span>
+              </div>
             </div>
           </div>
 
@@ -83,13 +83,13 @@
             <div class="progreso-info">
               <div class="progreso-numeros">
                 <img src="iconos/palomita.png" class="item-icono-img" alt="Tareas">
-  <span>✓ {{ tareasCompletadas }} completadas</span>
-  <span> {{ tareasTotal }} total</span>
+                <span>✓ {{ tareasCompletadas }} completadas</span>
+                <span> {{ tareasTotal }} total</span>
               </div>
               <div class="progreso-barra-wrap">
-  <div class="progreso-barra" [style.width]="porcentajeProgreso + '%'"></div>
+                <div class="progreso-barra" [style.width]="porcentajeProgreso + '%'"></div>
               </div>
-<p class="progreso-pct">{{ porcentajeProgreso }}%</p>
+              <p class="progreso-pct">{{ porcentajeProgreso }}%</p>
             </div>
           </div>
 
@@ -122,7 +122,7 @@
             <span *ngIf="!avatarImg"> </span>
           </div>
           <div class="avatar-texto">
-<p class="avatar-recomendacion">{{ recomendacion }}</p>
+            <p class="avatar-recomendacion">{{ recomendacion }}</p>
             <p class="avatar-sub">
               Nivel de estrés: {{ nivelEstresLabel }}
             </p>
@@ -176,25 +176,21 @@
             <button class="btn-lateral" (click)="abrirCuadrado()">+</button>
           </div>
 
-<ul class="lista-tareas" *ngIf="tareas.length > 0">
-  <li *ngFor="let tarea of tareas"
-    class="tarea-item"
-    [class.completada]="tarea.finalizada">
-<button class="btn-check"
-  (click)="completarTarea(tarea.id_tarea)"
-  [disabled]="tarea.finalizada"
-  [style.cursor]="tarea.finalizada ? 'default' : 'pointer'">
-  {{ tarea.finalizada ? '✓' : ' [ ]' }}
+          <ul class="lista-tareas" *ngIf="tareas.length > 0">
+            <li *ngFor="let tarea of tareas" class="tarea-item" [class.completada]="tarea.finalizada">
+<button class="btn-check" (click)="completarTarea(tarea.id_tarea)"
+  [style.cursor]="'pointer'">
+  {{ tarea.finalizada ? '✓' : '[ ]' }}
 </button>
-    <div class="tarea-item-info">
-      <span class="tarea-item-nombre">{{ tarea.nombre_tarea }}</span>
-      <span class="tarea-item-sub" *ngIf="tarea.fecha || tarea.materia">
-        {{ tarea.fecha }}{{ tarea.materia ? ' · ' + tarea.materia.nombre_materia : '' }}
-      </span>
-    </div>
-    <button class="btn-eliminar-tarea" (click)="eliminarTarea(tarea.id_tarea)">✖</button>
-  </li>
-</ul>
+              <div class="tarea-item-info">
+                <span class="tarea-item-nombre">{{ tarea.nombre_tarea }}</span>
+                <span class="tarea-item-sub" *ngIf="tarea.fecha || tarea.materia">
+                  {{ tarea.fecha }}{{ tarea.materia ? ' · ' + tarea.materia.nombre_materia : '' }}
+                </span>
+              </div>
+              <button class="btn-eliminar-tarea" (click)="eliminarTarea(tarea.id_tarea)">✖</button>
+            </li>
+          </ul>
           <p class="lateral-vacio" *ngIf="tareas.length === 0">
             No hay tareas aún
           </p>
@@ -211,7 +207,7 @@
       <h3>Nueva tarea rápida</h3>
       <input type="text" [(ngModel)]="nuevaTarea" placeholder="Escribe tu tarea..." class="input-tarea"
         (keyup.enter)="agregarTareaRapida()">
-<button class="btn-confirmar" (click)="agregarTareaRapida()">Agregar</button>
+      <button class="btn-confirmar" (click)="agregarTareaRapida()">Agregar</button>
       <a routerLink="/tareas" class="link-tarea-completa" (click)="cerrarCuadrado()">
         + Agregar con más detalles
       </a>
