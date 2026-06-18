@@ -255,9 +255,9 @@
   color: #888;
 }
 
-.gauge-container {
-  position: relative;
+.gauge-wrap {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 8px;
@@ -266,14 +266,19 @@
 .gauge-svg {
   width: 120px;
   height: 70px;
+  display: block;
 }
 
 .gauge-valor {
-  position: absolute;
-  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
   font-size: 1.2rem;
   font-weight: 900;
   color: #1A1A1A;
+  text-align: center;
 }
 
 .avatar-img {

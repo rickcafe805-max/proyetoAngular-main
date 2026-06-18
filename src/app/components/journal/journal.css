@@ -760,6 +760,15 @@
 }
 
 /* ── DARK MODE JOURNAL ── */
+body.dark-mode .contenido {
+  background-color: #111 !important;
+}
+
+body.dark-mode .vista-hoy,
+body.dark-mode .vista-historial {
+  background-color: #111 !important;
+}
+
 body.dark-mode .tabs-header {
   background-color: #111 !important;
   border-bottom-color: #333 !important;
