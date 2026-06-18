@@ -361,3 +361,117 @@ body.dark-mode .progreso-numeros span {
 body.dark-mode .progreso-barra-wrap {
   background-color: #333 !important;
 }
+
+/* ── CALENDARIO MODAL MODO OSCURO ── */
+body.dark-mode .calendar {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .calendar-header {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .year-label {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .nav-btn {
+  color: #aaa !important;
+}
+
+body.dark-mode .nav-btn:hover {
+  background-color: #333 !important;
+}
+
+body.dark-mode .calendar-day {
+  color: #ddd !important;
+}
+
+body.dark-mode .calendar-day:hover {
+  background-color: #333 !important;
+}
+
+body.dark-mode .curr-date {
+  background-color: #F5C842 !important;
+  color: #000 !important;
+}
+
+body.dark-mode .weekday {
+  color: #666 !important;
+}
+
+body.dark-mode .month-dropdown {
+  background-color: #1a1a1a !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;
+}
+
+body.dark-mode .month-option {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .month-option:hover {
+  background-color: #333 !important;
+}
+
+body.dark-mode .btn-seleccionar {
+  background-color: #F5C842 !important;
+  color: #000 !important;
+}
+
+/* ── ESTADO ACTUAL MODO OSCURO ── */
+body.dark-mode .tarjeta.estado-actual {
+  filter: brightness(0.6) !important;
+}
+
+/* ── JOURNAL HEADER MODO OSCURO ── */
+body.dark-mode .journal-fecha-area {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .journal-dia {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .journal-fecha-completa {
+  color: #888 !important;
+}
+
+/* ── JOURNAL FOOTER MODO OSCURO ── */
+body.dark-mode .journal-footer {
+  background-color: #111 !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .estres-selector label {
+  color: #aaa !important;
+}
+
+body.dark-mode .estres-btn {
+  border-color: transparent !important;
+}
+
+body.dark-mode .estres-btn.activo {
+  border-color: #F5C842 !important;
+}
+
+body.dark-mode .btn-guardar {
+  background-color: #F5C842 !important;
+  color: #000 !important;
+}
+
+body.dark-mode .journal-chars {
+  color: #555 !important;
+}
+
+/* ── JOURNAL COMPLETADAS BADGE MODO OSCURO ── */
+body.dark-mode .completadas-badge {
+  background-color: #2a2a00 !important;
+  color: #F5C842 !important;
+}
+
+/* ── JOURNAL AVISO MODO OSCURO ── */
+body.dark-mode .completadas-aviso {
+  background-color: #1a1a1a !important;
+  color: #666 !important;
+}

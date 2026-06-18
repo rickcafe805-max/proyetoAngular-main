@@ -215,7 +215,20 @@ generarRecomendacion() {
   completarTarea(id: number) {
     this.tareasApi.completar(id).subscribe({
       next: () => {
-        this.cargarTareas();
+        // Actualizar localmente sin esperar al servidor
+        const tarea = this.tareas.find(t => t.id_tarea === id);
+        if (tarea) tarea.finalizada = true;
+
+        // Recalcular progreso
+        this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
+        this.tareasTotal = this.tareas.length;
+        this.porcentajeProgreso = this.tareasTotal > 0
+          ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
+          : 0;
+
+        this.cdr.detectChanges();
+
+        // Actualizar nivel de estrés del dashboard
         this.cargarDashboard();
       }
     });

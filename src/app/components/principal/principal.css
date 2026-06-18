@@ -642,6 +642,17 @@
   gap: 4px;
 }
 
+.estado-actual {
+  transition: background-color 0.2s ease;
+  color: #111111;
+}
+
+.estado-actual .tarjeta-titulo,
+.estado-actual .estado-icono,
+.estado-actual .estado-label {
+  color: inherit;
+}
+
 .estado-icono {
   font-size: 1.4rem;
   font-family: monospace;
@@ -771,4 +782,38 @@
 
 .toggle-oscuro.activo .toggle-circulo {
   left: 23px;
+}
+
+/* Asegura que la barra reaccione */
+.progreso-barra {
+  height: 100%;
+  background-color: #F4A0B5;
+  border-radius: 30px;
+  transition: width 0.5s ease;
+  min-width: 0;
+}
+
+body.dark-mode .tarjeta {
+  filter: brightness(0.75) !important;
+}
+
+body.dark-mode .tarjeta-titulo {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .estado-icono,
+body.dark-mode .estado-label {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .progreso-numeros span {
+  color: #ddd !important;
+}
+
+body.dark-mode .progreso-barra-wrap {
+  background-color: #333 !important;
+}
+
+body.dark-mode .gauge-pts {
+  color: #f0f0f0 !important;
 }

@@ -985,3 +985,19 @@ body.dark-mode .estres-selector {
 body.dark-mode .estres-selector label {
   color: #666 !important;
 }
+
+.completadas-badge {
+  background-color: #F9DFA0;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  min-width: 28px;
+  text-align: center;
+}
+
+body.dark-mode .completadas-badge {
+  background-color: #3a3a00 !important;
+  color: #F5C842 !important;
+}
