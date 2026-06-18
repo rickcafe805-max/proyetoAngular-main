@@ -180,9 +180,12 @@
   <li *ngFor="let tarea of tareas"
     class="tarea-item"
     [class.completada]="tarea.finalizada">
-    <button class="btn-check" (click)="completarTarea(tarea.id_tarea)">
-      {{ tarea.finalizada ? '✓' : '[ ]' }}
-    </button>
+<button class="btn-check"
+  (click)="completarTarea(tarea.id_tarea)"
+  [disabled]="tarea.finalizada"
+  [style.cursor]="tarea.finalizada ? 'default' : 'pointer'">
+  {{ tarea.finalizada ? '✓' : ' [ ]' }}
+</button>
     <div class="tarea-item-info">
       <span class="tarea-item-nombre">{{ tarea.nombre_tarea }}</span>
       <span class="tarea-item-sub" *ngIf="tarea.fecha || tarea.materia">

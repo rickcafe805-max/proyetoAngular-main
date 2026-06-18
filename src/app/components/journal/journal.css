@@ -1001,3 +1001,53 @@ body.dark-mode .completadas-badge {
   background-color: #3a3a00 !important;
   color: #F5C842 !important;
 }
+
+body.dark-mode .tabs-header {
+  background-color: #0d0d0d !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .tab-btn {
+  background-color: #1a1a1a !important;
+  color: #aaa !important;
+}
+
+body.dark-mode .tab-btn.activo {
+  background-color: #2a2506 !important;
+  color: #F5C842 !important;
+}
+
+body.dark-mode .entrada-card {
+  background-color: #1a1a1a !important;
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .entrada-dia {
+  color: #f0f0f0 !important;
+}
+
+body.dark-mode .entrada-fecha {
+  color: #888 !important;
+}
+
+body.dark-mode .entrada-contenido {
+  background-color: #111 !important;
+  color: #ccc !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .entrada-tarea-item {
+  background-color: #222 !important;
+}
+
+body.dark-mode .entrada-tarea-nombre {
+  color: #888 !important;
+}
+
+body.dark-mode .entrada-tareas-titulo {
+  color: #666 !important;
+}
+
+body.dark-mode .vista-historial {
+  background-color: #0d0d0d !important;
+}

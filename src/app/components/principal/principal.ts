@@ -212,27 +212,39 @@ generarRecomendacion() {
     });
   }
 
-  completarTarea(id: number) {
-    this.tareasApi.completar(id).subscribe({
-      next: () => {
-        // Actualizar localmente sin esperar al servidor
-        const tarea = this.tareas.find(t => t.id_tarea === id);
-        if (tarea) tarea.finalizada = true;
+completarTarea(id: number) {
+  // Evitar doble click
+  const tarea = this.tareas.find(t => t.id_tarea === id);
+  if (!tarea || tarea.finalizada) return;
 
-        // Recalcular progreso
-        this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
-        this.tareasTotal = this.tareas.length;
-        this.porcentajeProgreso = this.tareasTotal > 0
-          ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
-          : 0;
+  // Actualizar inmediatamente en UI
+  tarea.finalizada = true;
+  this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
+  this.tareasTotal = this.tareas.length;
+  this.porcentajeProgreso = this.tareasTotal > 0
+    ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
+    : 0;
 
-        this.cdr.detectChanges();
+  // Actualizar estrés localmente
+  const puntos = tarea.puntos_estres || 0;
+  this.nivelEstresTotal = Math.max(0, this.nivelEstresTotal - puntos);
+  this.porcentajeEstres = Math.min((this.nivelEstresTotal / 50) * 100, 100);
 
-        // Actualizar nivel de estrés del dashboard
-        this.cargarDashboard();
-      }
-    });
-  }
+  this.cdr.detectChanges();
+
+  // Llamar API en background sin revertir UI
+  this.tareasApi.completar(id).subscribe({
+    error: () => {
+      // Si falla, revertir
+      tarea.finalizada = false;
+      this.tareasCompletadas = this.tareas.filter(t => t.finalizada).length;
+      this.porcentajeProgreso = this.tareasTotal > 0
+        ? Math.round((this.tareasCompletadas / this.tareasTotal) * 100)
+        : 0;
+      this.cdr.detectChanges();
+    }
+  });
+}
 
   eliminarTarea(id: number) {
     this.tareasApi.eliminar(id).subscribe({
