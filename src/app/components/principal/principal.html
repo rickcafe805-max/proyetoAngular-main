@@ -83,8 +83,8 @@
             <div class="progreso-info">
               <div class="progreso-numeros">
                 <img src="iconos/palomita.png" class="item-icono-img" alt="Tareas">
-  <span>✅ {{ tareasCompletadas }} completadas</span>
-  <span>📋 {{ tareasTotal }} total</span>
+  <span>✓ {{ tareasCompletadas }} completadas</span>
+  <span> {{ tareasTotal }} total</span>
               </div>
               <div class="progreso-barra-wrap">
   <div class="progreso-barra" [style.width]="porcentajeProgreso + '%'"></div>
@@ -181,7 +181,7 @@
     class="tarea-item"
     [class.completada]="tarea.finalizada">
     <button class="btn-check" (click)="completarTarea(tarea.id_tarea)">
-      {{ tarea.finalizada ? '✅' : '⬜' }}
+      {{ tarea.finalizada ? '✓' : '[ ]' }}
     </button>
     <div class="tarea-item-info">
       <span class="tarea-item-nombre">{{ tarea.nombre_tarea }}</span>

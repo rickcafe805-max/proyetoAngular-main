@@ -68,7 +68,7 @@
           {{ t.materia.nombre_materia }}
         </span>
         <span class="tarea-fecha" *ngIf="t.fecha">
-          📅 {{ t.fecha }}
+          <img src="iconos/calendario.png" class="icono-lateral" alt="Calendario"> {{ t.fecha }}
         </span>
         <div class="tarea-tags">
           <span class="tag">{{ t.dificultad }}</span>
@@ -79,7 +79,7 @@
       <div class="tarea-acciones">
         <button class="btn-completar" (click)="completarTarea(t.id_tarea)"
           [title]="t.finalizada ? 'Completada' : 'Marcar como completada'">
-          {{ t.finalizada ? '✅' : '⬜' }}
+          {{ t.finalizada ? '✓' : '[ ]' }}
         </button>
         <button class="btn-eliminar" (click)="eliminarTarea(t.id_tarea)">🗑️</button>
       </div>
@@ -110,7 +110,7 @@
           </option>
         </select>
         <small class="sin-materias" *ngIf="materias.length === 0">
-          ⚠️ No tienes materias. <a (click)="mostrarForm = false; mostrarAgregarMateria = true">Agregar materia</a>
+          OJO No tienes materias. <a (click)="mostrarForm = false; mostrarAgregarMateria = true">Agregar materia</a>
         </small>
       </div>
 
@@ -147,7 +147,7 @@
     </div>
 
     <div class="estres-box" *ngIf="dificultad && prioridad">
-      <span>⚠️</span>
+      <span>CUIDADO</span>
       <div>
         <p><strong>Estrés generado</strong></p>
         <p>{{ estresGenerado }} puntos</p>
@@ -174,7 +174,7 @@
 
     <div class="campo">
       <label>Docente</label>
-      <input type="text" [(ngModel)]="nuevaMateriaDocente" placeholder="Ej. Dr. Martínez">
+      <input type="text" [(ngModel)]="nuevaMateriaDocente" placeholder="Ej. Dr. Panayotis">
     </div>
 
     <div class="campo">
