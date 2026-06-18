@@ -28,7 +28,7 @@ export class Cuestionario4 implements OnDestroy {
 
   slides = [
     {
-      icono: '⚙️',
+      icono: 'Puntos de Estrés',
       titulo: 'Sistema de estrés por puntos',
       descripcion: 'Cada tarea suma puntos de estrés según su dificultad y prioridad. Al completarlas, los puntos se reducen.',
       items: [
@@ -38,32 +38,10 @@ export class Cuestionario4 implements OnDestroy {
       ]
     },
     {
-      icono: '🔥',
-      titulo: 'Sistema de rachas',
-      descripcion: 'Usa la app consecutivamente para ganar rachas y desbloquear beneficios especiales.',
-      items: [
-        '3 días seguidos: Primera racha',
-        '7 días seguidos: Bonus de estrés -5 puntos',
-        '15 días seguidos: Desbloqueas funciones premium'
-      ]
-    },
-    {
-      icono: '🤖',
-      titulo: 'Asistente',
-      descripcion: 'Tu asistente personal te ayudará a mantener el equilibrio durante todo el día.',
-      items: [
-        'Por la mañana: Pronóstico de estrés del día',
-        'Durante el día: Seguimiento de tus tareas',
-        'Por la noche: Reflexión sobre tu día'
-      ]
-    },
-    {
-      icono: '☕',
+      icono: 'Mini Descansos',
       titulo: 'Microdescansos',
       descripcion: 'Cuando detectemos mucho tiempo sin interacción o estrés alto, te sugeriremos pausas.',
       items: [
-        'Respiración guiada de 1 minuto',
-        'Reduce instantáneamente tu estrés',
         'Activa el "Modo Solo lo urgente" si es necesario'
       ]
     }

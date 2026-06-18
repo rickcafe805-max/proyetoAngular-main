@@ -770,9 +770,27 @@ body.dark-mode .tab-btn {
   color: #aaa !important;
 }
 
+body.dark-mode .tabs-header {
+  background-color: #0d0d0d !important;
+  border-bottom-color: #333 !important;
+}
+
+body.dark-mode .tab-btn {
+  background-color: #1a1a1a !important;
+  color: #c9c9c9 !important;
+}
+
+body.dark-mode .tab-btn img {
+  filter: brightness(0.85) !important;
+}
+
 body.dark-mode .tab-btn.activo {
   background-color: #2a2506 !important;
   color: #F5C842 !important;
+}
+
+body.dark-mode .tab-btn.activo img {
+  filter: brightness(1) sepia(0.6) saturate(2) hue-rotate(15deg) !important;
 }
 
 body.dark-mode .col-journal {
@@ -947,7 +965,7 @@ body.dark-mode .entrada-tareas-titulo {
   font-size: 1.4rem;
   background: none;
   border: 2px solid transparent;
-  border-radius: 50%;
+  border-radius: 65%;
   padding: 4px;
   cursor: pointer;
   transition: transform 0.1s, border-color 0.1s;
