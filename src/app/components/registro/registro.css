@@ -22,24 +22,24 @@
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 1.6px;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
   align-self: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .logo-img {
-  width: 42px;
-  height: 42px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
 }
 
 .logo-texto {
-  font-size: 0.8rem;
-  line-height: 1;
+  font-size: 1.15rem;
+  line-height: 1.1;
 }
 
 .btn-volver {
